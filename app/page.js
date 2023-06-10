@@ -1,8 +1,11 @@
-import './App.css';
-import handleSubmit from './handles/handlesubmit';
+"use client";
 import { useRef } from 'react';
+import "./App.css";
+import handleSubmit from './handles/handlesubmit';
+
  
 function App() {
+
   const dataRef = useRef()
  
   const submithandler = (e) => {
