@@ -7,7 +7,7 @@ export const  App= () => {
   return (
     <div className='bg-lightblue w-full h-[100vh]'>
         <Navbar />
-        Is this working
+        <Hero />
     </div>
   )
 }
