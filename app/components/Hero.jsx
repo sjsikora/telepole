@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 export const Hero = () => {
   return (
@@ -12,9 +13,11 @@ export const Hero = () => {
       <div className='h-[100px]'>
 
       </div>
-      <h3 className='text-[34px] text-white p-10 bg-spblack '>
-        Get Started
-      </h3>
+      <Link href="/dashboard">
+        <h3 className='text-[34px] text-white p-10 bg-spblack rounded-lg'>
+          Get Started
+        </h3>
+      </Link>
 
 
     </div>
