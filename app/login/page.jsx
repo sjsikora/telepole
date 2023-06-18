@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Hero from './components/Hero'
  
 function login() {
     return (
@@ -6,7 +7,7 @@ function login() {
             <Head>
                 <title>Login to Telepole</title>
             </Head>
-            <h1>hello</h1>
+            <Hero />
         </div>
     )
 }
