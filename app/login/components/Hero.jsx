@@ -1,10 +1,11 @@
 import React from 'react'
-import TextInput from './TextInput.jsx'
+import Form from '../components/Form.jsx'
 
 export const Hero = () => {
     return (
         <div className='w-full flex flex-col items-center'>
-            <TextInput name={"Email"} />
+            <div className='p-10 text-[64px]'>Get Started with Telepole</div>
+            <Form />
         </div>
     )
 }
