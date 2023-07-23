@@ -1,4 +1,3 @@
-
 import React from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -9,6 +8,7 @@ export const  App= () => {
     <div>
       <Head>
         <title>Telepole</title>
+        <meta name='description' content='Telepole' />
       </Head>
       <div className='bg-lightblue w-full h-[100vh]'>
         <Navbar />
