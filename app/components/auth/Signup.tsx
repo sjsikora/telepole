@@ -8,7 +8,7 @@ type SignupProps = {
 const Signup:React.FC<SignupProps> = () => {
     
     return <form className='space-y-6 px-6 pb-4 h-screen flex flex-col justify-between'>
-        <div></div>
+        <div />
         <h1 className='text-4xl flex justify-center font-bold'> Register </h1>
 
         <div className='space-y-2 '>

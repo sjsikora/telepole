@@ -8,7 +8,7 @@ type ResetpasswordProps = {
 const Resetpassword:React.FC<ResetpasswordProps> = () => {
     
     return <form className='space-y-6 px-6 pb-4 h-screen flex flex-col justify-between'>
-        <div></div>
+        <div />
         <h1 className='text-4xl flex justify-center font-bold'> Reset Pasword </h1>
 
         <div className='space-y-2 '>
