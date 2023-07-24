@@ -1,7 +1,6 @@
 import React from 'react'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export const  App= () => {
   return (
@@ -11,9 +10,11 @@ export const  App= () => {
         <meta name='description' content='Telepole' />
       </Head>
       <div className='bg-lightblue w-full h-[100vh]'>
-        <Navbar />
-        <Hero />
+        hello world
+        <Link className="text-spgreen underline" href="./auth/signup">Sign up</Link>
       </div>
+
+      
     </div>
 
   )
