@@ -39,7 +39,7 @@ const Login:React.FC<LoginProps> = () => {
             <div className='flex justify-center p-2'>
                 <div> New to Telepole? </div>
                 <div className='px-2'/>
-                <Link className="text-spgreen underline" href="./auth/login">Sign up</Link>
+                <Link className="text-spgreen underline" href="./auth/signup">Sign up</Link>
             </div>
         </div>
 
