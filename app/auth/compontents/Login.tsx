@@ -27,7 +27,7 @@ const Login:React.FC<LoginProps> = () => {
             </div>
         </div>
         <div className='flex justify-center'>
-            <button className='bg-spgreen text-white rounded-full text-4xl p-5 px-20'>
+            <button className='bg-spgreen text-white rounded-full text-2xl p-5 px-20'>
                 Log in
             </button>
         </div>

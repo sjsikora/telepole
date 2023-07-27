@@ -1,9 +1,9 @@
+import Resetpassword from '../compontents/Resetpassword';
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image'
-import logo from '../../../public/assets/full_logo.png'
+import logo from '../../../public/assets/full_logo.svg'
 import homeIcon from "../../../public/icons/home.svg"
-import Resetpassword from '@/app/components/auth/Resetpassword';
 
 type pageProps = {
     

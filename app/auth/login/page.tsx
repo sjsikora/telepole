@@ -1,8 +1,8 @@
-import Login from '@/app/components/auth/Login';
+import Login from '../compontents/Login';
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image'
-import logo from '../../../public/assets/full_logo.png'
+import logo from '../../../public/assets/full_logo.svg'
 import homeIcon from "../../../public/icons/home.svg"
 
 
