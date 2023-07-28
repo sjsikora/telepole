@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/app/firebase/firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
-import { error } from 'console';
 
 type LoginProps = {
     
@@ -15,9 +14,6 @@ const Login:React.FC<LoginProps> = () => {
     const router = useRouter();
     const [inputs, setInputs] = React.useState({email: '', password: ''})
     const [errorMessage, setErrorMessage] = React.useState('');
-    
-
-
 
     //Check if user is already signed in:
     onAuthStateChanged(auth, (user) => {

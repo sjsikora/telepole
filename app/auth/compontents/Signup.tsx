@@ -16,7 +16,6 @@ const Signup:React.FC<SignupProps> = () => {
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(true);
 
-    
     //Check if user is already signed in:
     onAuthStateChanged(auth, (user) => {
         if (user) router.push('/');
