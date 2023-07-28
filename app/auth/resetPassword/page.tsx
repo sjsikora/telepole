@@ -1,4 +1,4 @@
-import Resetpassword from '../compontents/Resetpassword';
+import Resetpassword from '../components/Resetpassword';
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image'

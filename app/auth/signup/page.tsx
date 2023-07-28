@@ -1,4 +1,4 @@
-import Signup from '../compontents/Signup';
+import Signup from '../components/Signup';
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image'
