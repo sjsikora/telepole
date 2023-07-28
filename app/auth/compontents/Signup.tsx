@@ -1,6 +1,6 @@
 'use client'
 import { auth } from '@/app/firebase/firebase';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
@@ -11,9 +11,19 @@ type SignupProps = {
 
 const Signup:React.FC<SignupProps> = () => {
 
-    const [inputs, setInputs] = React.useState({displayName:'', email: '', password: ''})
-
     const router = useRouter();
+    const [inputs, setInputs] = React.useState({displayName:'', email: '', password: ''});
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const [loading, setLoading] = React.useState(true);
+
+    
+    //Check if user is already signed in:
+    onAuthStateChanged(auth, (user) => {
+        if (user) router.push('/');
+        if (loading && !user) setLoading(false);
+    });
+
+    if(loading) return <div className='h-screen flex items-center justify-center'> Loading... </div> 
 
     const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputs((prev) => ({...prev, [e.target.name]: e.target.value}));
@@ -24,14 +34,19 @@ const Signup:React.FC<SignupProps> = () => {
 
         if (inputs.displayName === '' || inputs.email === '' || inputs.password === '') return alert('Please fill in all fields.');
 
-        createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
+        const user = createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
             .then((userCredential) => {
-                const user = userCredential.user;
+                return(userCredential.user)
             })
             .catch((error) => {
-                const errorCode = error.code;
+
+                if(error.code === 'auth/email-already-in-use') setErrorMessage("Email already in use. Log in or use a different email.");
+                if(error.code === 'auth/weak-password') setErrorMessage("Password must be at least 6 characters long.");
+
                 alert(error.message);
             });
+
+        
     }
     
     return <form className='space-y-6 px-6 pb-4 h-screen flex flex-col justify-between' 
@@ -65,6 +80,9 @@ const Signup:React.FC<SignupProps> = () => {
                     onChange={handleChangeInput} />
             </div>
         </div>
+
+        <p className='text-red-600'>{errorMessage}</p>
+
         <div className='flex justify-center'>
             <button className='bg-spgreen text-white rounded-full text-2xl p-5 px-20'>
                 Sign Up
