@@ -1,5 +1,5 @@
 
-<img src="public/assets/full_logo.svg" alt="Telepole Main Logo" width="600"/>
+<img src="public/assets/full_logo.svg" align="center" alt="Telepole Main Logo" width="600"/>
 
-## Welcome to Telepole.
-# Your online telephone pole.
+<h1 align="center"> Welcome to Telepole. </h1>
+<h3 align="center"> Your online telephone pole. </h3>
