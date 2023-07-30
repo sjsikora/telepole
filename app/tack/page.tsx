@@ -2,6 +2,9 @@
 import React from 'react';
 import { storage, database } from '@/app/firebase/firebase';
 import { ref, uploadBytes } from "firebase/storage";
+import { auth } from '@/app/firebase/firebase'
+import { onAuthStateChanged } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 
 
 type pageProps = {
@@ -9,6 +12,13 @@ type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
+
+    //If user is not signed in, redirect to login page:
+    const router = useRouter();
+    onAuthStateChanged(auth, (user) => {
+        if (user) router.push('/auth/login');
+    });
+
 
     const [imageUpload, setImageUpload] = React.useState<any>(null);
 
@@ -22,8 +32,6 @@ const page:React.FC<pageProps> = () => {
 
 
         // TODO: Need to "vet" the image before allowing it to be uploaded.
-
-        
 
     };
     
