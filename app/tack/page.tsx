@@ -5,6 +5,7 @@ import { ref, uploadBytes } from "firebase/storage";
 import { auth } from '@/app/firebase/firebase'
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import Navbar from '@/app/components/navbar/Navbar';
 
 
 type pageProps = {
@@ -16,7 +17,7 @@ const page:React.FC<pageProps> = () => {
     //If user is not signed in, redirect to login page:
     const router = useRouter();
     onAuthStateChanged(auth, (user) => {
-        if (user) router.push('/auth/login');
+        if (!user) router.push('/auth/login');
     });
 
 
@@ -36,6 +37,9 @@ const page:React.FC<pageProps> = () => {
     };
     
     return <div>
+        <Navbar />
+
+
         <input type="file" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             if(!e.target.files) return; 
             setImageUpload(e.target.files[0])
