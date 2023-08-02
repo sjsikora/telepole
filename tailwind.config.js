@@ -16,6 +16,7 @@ module.exports = {
         'lightblue':'#497DA0',
         'spwhite': '#F4EDED',
         'spblack': '#2E282A',
+        'spgreen': '#35AA44',
       }
     },
   },
