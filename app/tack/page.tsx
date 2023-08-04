@@ -1,52 +1,17 @@
-'use client';
 import React from 'react';
-import { storage, database } from '@/app/firebase/firebase';
-import { ref, uploadBytes } from "firebase/storage";
-import { auth } from '@/app/firebase/firebase'
-import { onAuthStateChanged } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
-import Navbar from '@/app/components/navbar/Navbar';
-
+import TackBoard from '../components/tack/TackBoard';
+import Navbar from '../components/navbar/Navbar';
 
 type pageProps = {
     
 };
 
 const page:React.FC<pageProps> = () => {
-
-    //If user is not signed in, redirect to login page:
-    const router = useRouter();
-    onAuthStateChanged(auth, (user) => {
-        if (!user) router.push('/auth/login');
-    });
-
-
-    const [imageUpload, setImageUpload] = React.useState<any>(null);
-
-    const uploadImage = async () => {
-        
-        const imageRef = ref(storage, `images/${imageUpload.name + Date.now()}`);
-        uploadBytes(imageRef, imageUpload)
-            .then(() => {
-                alert('Image uploaded successfully');
-            })
-
-
-        // TODO: Need to "vet" the image before allowing it to be uploaded.
-
-    };
     
     return <div>
         <Navbar />
+        <TackBoard />
 
-
-        <input type="file" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if(!e.target.files) return; 
-            setImageUpload(e.target.files[0])
-        }} />
-
-        <button onClick={uploadImage}> Upload Image</button>
-        
     </div>
 }
 export default page;

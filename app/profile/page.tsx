@@ -1,4 +1,6 @@
 import React from 'react';
+import TackBoard from '../components/tack/TackBoard';
+import Navbar from '../components/navbar/Navbar';
 
 type pageProps = {
     
@@ -6,6 +8,9 @@ type pageProps = {
 
 const page:React.FC<pageProps> = () => {
     
-    return <div>Have a good coding</div>
+    return <div>
+        <Navbar />
+        <TackBoard />
+    </div>
 }
 export default page;
