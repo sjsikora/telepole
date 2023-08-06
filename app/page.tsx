@@ -4,15 +4,12 @@ import Navbar from './components/navbar/Navbar';
 import { GetStaticProps } from 'next';
 import { Neighborhood } from './js/types';
 import MainMap from './components/index/MainMap';
+import MapHandler from './components/index/MapHandler';
 
 type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
-    
-
-    const [neighborhoodString, setNeighborhoodString] = React.useState('Queen Anne');
-
 
     return <div>
         <div>
@@ -50,9 +47,7 @@ const page:React.FC<pageProps> = () => {
                     <div />
                 </div>
             </div>
-            <div className='md:w-1/2 md:h-auto h-1/2 overflow-hidden'>
-                <MainMap neighborhoodString={neighborhoodString}/>
-            </div>
+            <MapHandler />
         </div>
     </div>
 }
