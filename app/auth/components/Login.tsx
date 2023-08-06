@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { auth } from '@/app/firebase/firebase';
+import { auth } from '@/app/js/firebase/firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 
 type LoginProps = {

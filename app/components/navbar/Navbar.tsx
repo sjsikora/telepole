@@ -24,11 +24,11 @@ const Navbar:React.FC<NavbarProps> = () => {
             <Link href="/"><Image className='p-[0.5rem] md:hidden' alt="Telepole logo" src={smallLogo} width={90} /></Link>
             
             
-            <Link className='text-white text-md px-[1rem] sm:text-lg' href='./about'> about us</Link>
+            <Link className='text-white text-md px-[1rem] sm:text-lg' href='./about'> about</Link>
             <Link className='text-white text-md sm:text-lg' href='./contact'> contact</Link>
         </div>
 
-        <div className='flex items-center px-3'>
+        <div className='flex items-center pr-3'>
 
             <div className='flex justify-around px-[2rem]'>
                 <NavbarButton iconName='push_pin' word='Tack' redirectURL='/tack'/>
