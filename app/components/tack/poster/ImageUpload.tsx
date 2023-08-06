@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import { storage, database } from '@/app/firebase/firebase';
+import { storage, database } from '@/app/js/firebase/firebase';
 import { ref, uploadBytes } from "firebase/storage";
-import { auth } from '@/app/firebase/firebase'
+import { auth } from '@/app/js/firebase/firebase'
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/navbar/Navbar';
