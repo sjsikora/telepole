@@ -1,4 +1,4 @@
-<div style="text-align: center;"> <img src="public/assets/small_icon.svg" align="center" alt="Telepole Logo" width="200"/> <div/>
+<p align="center"><img src="public/assets/small_icon.svg" align="center" alt="Telepole Logo" width="200"/> <p/>
 <h1></h1>
 <h1 align="center"> Welcome to Telepole: Your online telephone pole. </h3>
 
