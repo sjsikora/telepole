@@ -19,10 +19,7 @@ const TackBoard:React.FC<TackBoardProps> = () => {
                 <h1> TACK YOUR POSTER </h1>
                 <Image className='p-[0.5rem]' alt="Telepole logo" src={tack} width={50} />
             </div>
-
-            
             <Poster />
-
         </div>
 
 
