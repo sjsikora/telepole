@@ -5,7 +5,6 @@ import { ref, uploadBytes } from "firebase/storage";
 import { auth } from '@/app/js/firebase/firebase'
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/app/components/navbar/Navbar';
 
 type PosterProps = {
     

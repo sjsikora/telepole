@@ -2,7 +2,6 @@
 import React from 'react';
 import Navbar from './components/navbar/Navbar';
 import { GetStaticProps } from 'next';
-import { Neighborhood } from './js/types';
 import MainMap from './components/index/MainMap';
 import MapHandler from './components/index/MapHandler';
 
