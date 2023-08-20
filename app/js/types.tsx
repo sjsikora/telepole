@@ -8,19 +8,20 @@ class Poster {
     owner : string;
     title: string;
     description: string;
-    id: string;
+    id: string | undefined;
     neighborhood : string[];
     imageRef : string;
     keywords : string[];
     created : Date;
     expiration : Date;
     reccuring : boolean;
-    reccuringDays : number[];
+    reccuringDays : string[];
+    reccurringTime: string;
     firebaseRef : Firestore;
 
 
 
-    constructor(city: string, id?: string, owner?: string,  title?: string, description?: string, neighborhood?: string[], imageRef?: string, keywords?: string[], created?: Date, expiration?: Date, reccuring?: boolean, reccuringDays?: number[]) {
+    constructor(city: string, id?: string, owner?: string,  title?: string, description?: string, reccurringTime?:string, neighborhood?: string[], imageRef?: string, keywords?: string[], created?: Date, expiration?: Date, reccuring?: boolean, reccuringDays?: string[]) {
 
         this.firebaseRef = firestore;
 
@@ -46,6 +47,7 @@ class Poster {
                             this.expiration = doc.data().expiration;
                             this.reccuring = doc.data().reccuring;
                             this.reccuringDays = doc.data().reccuringDays;
+                            this.reccurringTime = doc.data().reccurringTime;
                             return;
                         }
                     })
@@ -56,7 +58,7 @@ class Poster {
                 })
         }
         
-        if(!owner || !title || !description || !neighborhood || !imageRef || !keywords || !created || !expiration || !reccuring || !reccuringDays) {
+        if(!owner || !title || !description || !reccurringTime || !neighborhood || !imageRef || !keywords || !created || !expiration || !reccuring || !reccuringDays) {
             throw new Error('Missing required parameters.');
         }
 
@@ -71,9 +73,9 @@ class Poster {
         this.expiration = expiration;
         this.reccuring = reccuring;
         this.reccuringDays = reccuringDays;
+        this.reccurringTime = reccurringTime;
 
         this.id = "TEMP";
-
 
     }
 
