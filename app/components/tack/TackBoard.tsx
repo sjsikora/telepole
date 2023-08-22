@@ -16,7 +16,7 @@ const TackBoard:React.FC<TackBoardProps> = () => {
         <div className='w-full max-w-2xl bg-white shadow-lg border-2 border-black'>
             <div className='flex justify-between items-center'>
                 <Image className='p-[0.5rem]' alt="Telepole logo" src={tack} width={50} />
-                <h1> TACK YOUR POSTER </h1>
+                <p className='text-xl font-bold'> TACK YOUR POSTER </p>
                 <Image className='p-[0.5rem]' alt="Telepole logo" src={tack} width={50} />
             </div>
             <Poster />

@@ -1,42 +1,49 @@
 import { storage, firestore } from '@/app/js/firebase/firebase';
-import { FirebaseStorage } from 'firebase/storage';
-import { Firestore, collection, getDoc, getDocs } from 'firebase/firestore';
+import { FirebaseStorage, uploadBytes } from 'firebase/storage';
+import { Firestore, addDoc, collection, getDoc, getDocs } from 'firebase/firestore';
+import { ref } from 'firebase/storage';
 
-class Poster {
+export class Telepole_Poster {
 
     city : string; //must be one of "seattle" or "kelowna"
     owner : string;
     title: string;
     description: string;
-    id: string | undefined;
-    neighborhood : string[];
-    imageRef : string;
-    keywords : string[];
+    neighborhood : string;
+    imageRef : string | undefined;
+    keywords : string;
     created : Date;
     expiration : Date;
     reccuring : boolean;
-    reccuringDays : string[];
-    reccurringTime: string;
+    imageUpload: any | undefined;
     firebaseRef : Firestore;
 
-
-
-    constructor(city: string, id?: string, owner?: string,  title?: string, description?: string, reccurringTime?:string, neighborhood?: string[], imageRef?: string, keywords?: string[], created?: Date, expiration?: Date, reccuring?: boolean, reccuringDays?: string[]) {
+    constructor(
+        city: string,
+        id?: string,
+        owner?: string,
+        title?: string,
+        description?: string,
+        neighborhood?: string,
+        keywords?: string,
+        created?: Date,
+        expiration?: Date,
+        reccuring?: boolean,
+        imageUpload?: any | null,
+    ) {
 
         this.firebaseRef = firestore;
 
-        // You can either have the id and nothing else, or you can only leave out the id.
         if (id) {
-            //TODO: Get the poster from the database.
-            const collectionRef = collection(this.firebaseRef, `cities/${city}/posters`);
-
+        const collectionRef = collection(this.firebaseRef, `cities/${city}/posters`);
+    
             getDocs(collectionRef)
                 .then((snapshot) => {
                     snapshot.docs.forEach((doc) => {
                         if(doc.id == id) {
-                            this.city = city;
-                            this.id = doc.id;
 
+                            this.city = city;
+    
                             this.owner = doc.data().owner;
                             this.title = doc.data().title;
                             this.description = doc.data().description;
@@ -46,8 +53,6 @@ class Poster {
                             this.created = doc.data().created;
                             this.expiration = doc.data().expiration;
                             this.reccuring = doc.data().reccuring;
-                            this.reccuringDays = doc.data().reccuringDays;
-                            this.reccurringTime = doc.data().reccurringTime;
                             return;
                         }
                     })
@@ -56,27 +61,81 @@ class Poster {
                 .catch((error) => {
                     throw new Error(error);
                 })
-        }
-        
-        if(!owner || !title || !description || !reccurringTime || !neighborhood || !imageRef || !keywords || !created || !expiration || !reccuring || !reccuringDays) {
-            throw new Error('Missing required parameters.');
+
         }
 
-        this.owner = owner;
+        if(owner === undefined || 
+            title === undefined ||
+            description === undefined ||
+            neighborhood === undefined ||
+            keywords === undefined ||
+            created === undefined ||
+            expiration === undefined ||
+            reccuring === undefined
+        ) throw new Error('Fields need to be filled out');
+
+
         this.city = city;
+        this.owner = owner;
         this.title = title;
         this.description = description;
         this.neighborhood = neighborhood;
-        this.imageRef = imageRef;
         this.keywords = keywords;
         this.created = created;
         this.expiration = expiration;
         this.reccuring = reccuring;
-        this.reccuringDays = reccuringDays;
-        this.reccurringTime = reccurringTime;
+        this.imageUpload = imageUpload;
 
-        this.id = "TEMP";
+    }
 
+
+
+    async uploadImage(imageRef: string): Promise<boolean> {
+
+        if(!this.imageUpload) throw new Error('No image to upload.');
+        
+        const storageRef = ref(storage, `images/${this.city}/${imageRef}`);
+        await uploadBytes(storageRef, this.imageUpload)
+        .catch((error) => {
+            throw new Error(error);
+        })
+
+        return true;
+    }
+
+
+
+    async uploadPoster(): Promise<boolean> {
+
+        let imageRef = this.city + "_" + this.imageUpload.name + Date.now();
+
+        await this.uploadImage(imageRef)
+            .catch((error) => {
+                throw new Error(error);
+            })
+
+        const posterRef = collection(this.firebaseRef, `cities/${this.city}/posters`);
+
+        addDoc(posterRef, {
+            city: this.city,
+            owner: this.owner,
+            title: this.title,
+            description: this.description,
+            neighborhood: this.neighborhood,
+            imageRef: imageRef,
+            keywords: this.keywords,
+            created: this.created,
+            expiration: this.expiration,
+            reccuring: this.reccuring,
+        })
+            .then(() => {
+                return true;
+            })
+            .catch((error) => {
+                throw new Error(error);
+            })
+
+        return false;
     }
 
 }
