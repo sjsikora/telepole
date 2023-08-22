@@ -24,6 +24,7 @@ const Poster:React.FC<PosterProps> = () => {
 
     const [imageUpload, setImageUpload] = React.useState<any>(null);
     const [errorMessage, setErrorMessage] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
 
     const [inputs, setInputs] = React.useState({
         title:'required',
@@ -46,18 +47,21 @@ const Poster:React.FC<PosterProps> = () => {
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
 
         let city = 'seattle';
         
 
         if(imageUpload === null) {
             setErrorMessage('Please upload an image.');
+            setLoading(false);
             return;
         }
 
         // Check if all fields are filled in
         if (!(Object.values(inputs).filter((v) => v === "required").length === 0)) {
             setErrorMessage('Please fill in all fields.');
+            setLoading(false);
             return;
         }
 
@@ -68,6 +72,7 @@ const Poster:React.FC<PosterProps> = () => {
 
             if(inputs.expiration === '') {
                 setErrorMessage('Please enter a valid date.');
+                setLoading(false);
                 return;
             }
 
@@ -75,6 +80,7 @@ const Poster:React.FC<PosterProps> = () => {
 
             if(expirationDate < currentDate) {
                 setErrorMessage('Please enter a date in the future.');
+                setLoading(false);
                 return;
             }
         }
@@ -95,13 +101,15 @@ const Poster:React.FC<PosterProps> = () => {
         );
 
 
-        poster.uploadPoster()
+        await poster.uploadPoster()
             .catch((error) => {
                 console.log(error);
                 setErrorMessage(error.message);
+                setLoading(false);
+                return;
             })
-        
-        
+
+        router.push('/');
     }
 
     console.log(inputs);
@@ -181,9 +189,16 @@ const Poster:React.FC<PosterProps> = () => {
             <p className='text-red-600 py-2'>{errorMessage}</p>
 
             <div className='flex justify-center'>
-            <button className='bg-spgreen text-white rounded-md p-3'>
-                Upload my Poster
-            </button>
+
+            {!loading && 
+                <button className='bg-spgreen text-white rounded-md p-3'>
+                    Upload my Poster
+                </button>}
+                
+            {loading &&
+                <div className='bg-spgreen text-white rounded-md p-3'>
+                    Uploading...
+                </div>}
         </div>
         </form>
         
