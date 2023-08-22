@@ -156,15 +156,6 @@ class Sticker {
 
 }
 
-//export interface Neighborhood {
-//    name: string;
-//    city: string;
-//    location : {
-//        lat: number;
-//        lng: number;
-//    }
-//}
-
 class Pole {
 
     id: number;
@@ -179,6 +170,11 @@ class Pole {
     constructor(id: number, location : {lat: number, lng: number}, postersID: string[], stickersID: string[]) {
 
         this.fireBaseStorageRef = storage;
+
+        
+
+
+
 
         this.id = id;
         this.location = location;
