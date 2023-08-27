@@ -2,6 +2,7 @@ import { storage, firestore } from '@/app/js/firebase/firebase';
 import { FirebaseStorage, uploadBytes } from 'firebase/storage';
 import { Firestore, addDoc, collection, getDoc, getDocs } from 'firebase/firestore';
 import { ref } from 'firebase/storage';
+import { auth } from '@/app/js/firebase/firebase'
 
 export class Telepole_Poster {
 
@@ -171,10 +172,7 @@ class Pole {
 
         this.fireBaseStorageRef = storage;
 
-        
-
-
-
+    
 
         this.id = id;
         this.location = location;
@@ -184,15 +182,62 @@ class Pole {
 
 }
 
-class User {
-    name: string;
-    email: string;
-    mainNeighborhood : string;
+class Telepole_User {
 
-    constructor(name: string, email: string, mainNeighborhood : string) {
-        this.name = name;
+    display_name: string;
+    email: string;
+    mainCity : string;
+    firebaseUserID : string;
+    firebaseRef: Firestore;
+    firebaseAuthRef: any;
+    ownedPosters: string[];
+
+    constructor(mainCity: string, firebaseUserID?: string, name?: string, email?: string, display_name?: string, ownedPosters?: string[]) {
+
+        this.mainCity = mainCity;
+        this.firebaseRef = firestore;
+        this.firebaseAuthRef = auth;
+
+        if(firebaseUserID) {
+            this.firebaseUserID = firebaseUserID;
+            this.firebaseUserID = firebaseUserID;
+
+            const collectionRef = collection(this.firebaseRef, `users`);
+    
+            getDocs(collectionRef)
+                .then((snapshot) => {
+                    snapshot.docs.forEach((doc) => {
+                        if(doc.data().firebaseUserID == firebaseUserID) {
+    
+                            this.display_name = doc.data().display_name;
+                            this.email = doc.data().email;
+                            this.display_name = doc.data().display_name;
+                            this.ownedPosters = doc.data().ownedPosters;
+
+                            return;
+                        }
+                    })
+                    throw new Error('User not found.');  
+                })
+        }
+
+        if(auth.currentUser === null) throw new Error('User not logged in.');
+
+        if(name === undefined || email === undefined || display_name === undefined || ownedPosters === undefined) throw new Error('Fields need to be filled out');
+
+
+        this.display_name = display_name;
         this.email = email;
-        this.mainNeighborhood = mainNeighborhood;
+        this.firebaseUserID = auth.currentUser.uid;
+        this.ownedPosters = ownedPosters;
     }
+
+    getUserDataByID(mainCity: string, firebaseUserID: string) {
+
+
+    }
+
+
+    
 
 }
