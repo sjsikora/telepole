@@ -21,7 +21,7 @@ const page:React.FC<pageProps> = () => {
             
             <Image className='p-10' alt="Telepole logo" src={logo} width={400}/>
 
-            <div className='shadow-2xl flex flex-col min-w-[20rem] w-[26vw] max-w-[30rem] h-[35rem]'>
+            <div className='shadow-2xl flex flex-col min-w-[20rem] w-[26vw] max-w-[30rem]'>
                 <Login />
             </div>
         </div>

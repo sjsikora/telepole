@@ -48,7 +48,7 @@ const Signup:React.FC<SignupProps> = () => {
         
     }
     
-    return <form className='space-y-6 px-6 pb-4 h-screen flex flex-col justify-between' 
+    return <form className='space-y-6 px-6 pb-4 flex flex-col justify-between' 
                 onSubmit={handleRegister}>
         <div />
         <h1 className='text-4xl flex justify-center font-bold'> Register </h1>
