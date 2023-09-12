@@ -1,7 +1,7 @@
-"use client"
 import React from 'react';
 import Navbar from './components/navbar/Navbar';
 import MapHandler from './components/index/MapHandler';
+import DropdownCitySelect from './components/index/DropdownCitySelect';
 
 type pageProps = {
 };
@@ -18,11 +18,7 @@ const page:React.FC<pageProps> = () => {
             <div className='w-full md:w-1/2 flex items-center justify-center'>
                 <div className='md:h-screen p-5 flex flex-col justify-evenly'>
                     <div className='flex flex-col items-center justify-center'>
-                        <div>
-                            <p className='text-5xl font-bold'> Welcome to Telepole. </p>
-                            <p className='pl-5 text-2xl p-5'> Your connection to Seattle, streamlined.</p>
-                            <p className='pl-5 text-2xl'> Your online telephone pole.</p>
-                        </div>
+                        <DropdownCitySelect />
                     </div>
 
                     <div>
