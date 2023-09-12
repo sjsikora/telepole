@@ -20,9 +20,6 @@ const page:React.FC<pageProps> = () => {
 
 
 
-
-
-
         </div>
     </div>
 }
