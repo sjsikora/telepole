@@ -3,6 +3,7 @@ import { FirebaseStorage, uploadBytes } from 'firebase/storage';
 import { Firestore, addDoc, collection, getDoc, getDocs } from 'firebase/firestore';
 import { ref } from 'firebase/storage';
 import { auth } from '@/app/js/firebase/firebase'
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export class Telepole_Poster {
 
@@ -90,7 +91,6 @@ export class Telepole_Poster {
     }
 
 
-
     async uploadImage(imageRef: string): Promise<boolean> {
 
         if(!this.imageUpload) throw new Error('No image to upload.');
@@ -172,8 +172,6 @@ class Pole {
 
         this.fireBaseStorageRef = storage;
 
-    
-
         this.id = id;
         this.location = location;
         this.postersID = postersID;
@@ -182,58 +180,83 @@ class Pole {
 
 }
 
-class Telepole_User {
+export class Telepole_User {
 
-    display_name: string;
-    email: string;
-    mainCity : string;
-    firebaseUserID : string;
+    display_name: string | undefined;
+    email: string | undefined;
+    password: string | undefined;
+    mainCity : string | undefined;
+    firebaseUserID : string | undefined;
+    ownedPosters: string[] | undefined;
+
     firebaseRef: Firestore;
     firebaseAuthRef: any;
-    ownedPosters: string[];
+    
 
-    constructor(mainCity: string, firebaseUserID?: string, name?: string, email?: string, display_name?: string, ownedPosters?: string[]) {
-
+    constructor(mainCity: string, firebaseUserID: string | undefined, email: string | undefined, display_name: string | undefined, ownedPosters: string[], password: string | undefined) {
         this.mainCity = mainCity;
+        this.firebaseUserID = firebaseUserID;
+        this.password = password;
+        this.email = email;
+        this.display_name = display_name;
+        this.ownedPosters = ownedPosters;
         this.firebaseRef = firestore;
         this.firebaseAuthRef = auth;
-
-        if(firebaseUserID) {
-            this.firebaseUserID = firebaseUserID;
-            this.firebaseUserID = firebaseUserID;
-
-            const collectionRef = collection(this.firebaseRef, `users`);
-    
-            getDocs(collectionRef)
-                .then((snapshot) => {
-                    snapshot.docs.forEach((doc) => {
-                        if(doc.data().firebaseUserID == firebaseUserID) {
-    
-                            this.display_name = doc.data().display_name;
-                            this.email = doc.data().email;
-                            this.display_name = doc.data().display_name;
-                            this.ownedPosters = doc.data().ownedPosters;
-
-                            return;
-                        }
-                    })
-                    throw new Error('User not found.');  
-                })
-        }
-
-        if(auth.currentUser === null) throw new Error('User not logged in.');
-
-        if(name === undefined || email === undefined || display_name === undefined || ownedPosters === undefined) throw new Error('Fields need to be filled out');
-
-
-        this.display_name = display_name;
-        this.email = email;
-        this.firebaseUserID = auth.currentUser.uid;
-        this.ownedPosters = ownedPosters;
     }
 
-    getUserDataByID(mainCity: string, firebaseUserID: string) {
+    async uploadUser() {
 
+        if(this.email === undefined || this.password === undefined) throw new Error('Fields need to be filled out');
+
+        await createUserWithEmailAndPassword(this.firebaseAuthRef, this.email, this.password)
+        
+        if(auth.currentUser === null) throw new Error('User not Created.');
+
+        this.firebaseUserID = auth.currentUser.uid;
+
+        //Dump Password
+        this.password = '';
+
+        //Add user to database
+        const userRef = collection(this.firebaseRef, `users`);
+
+        addDoc(userRef, {
+            mainCity: this.mainCity,
+            firebaseUserID: this.firebaseUserID,
+            email: this.email,
+            display_name: this.display_name,
+            ownedPosters: this.ownedPosters
+        })        
+    }
+
+
+
+
+
+
+
+
+
+
+
+    getUserDataByID(firebaseUserID: string) {
+        const collectionRef = collection(this.firebaseRef, `users`);
+
+        getDocs(collectionRef)
+            .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    if(doc.data().firebaseUserID == firebaseUserID) {
+
+                        this.display_name = doc.data().display_name;
+                        this.email = doc.data().email;
+                        this.display_name = doc.data().display_name;
+                        this.ownedPosters = doc.data().ownedPosters;
+
+                        return;
+                    }
+                })
+                throw new Error('User not found.');  
+            })
 
     }
 

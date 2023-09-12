@@ -4,6 +4,8 @@ import { createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
+import { Telepole_User } from '@/app/js/types';
+import { FirebaseError } from 'firebase/app';
 
 type SignupProps = {
     
@@ -33,19 +35,37 @@ const Signup:React.FC<SignupProps> = () => {
 
         if (inputs.displayName === '' || inputs.email === '' || inputs.password === '') return alert('Please fill in all fields.');
 
-        const user = createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
-            .then((userCredential) => {
-                return(userCredential.user)
-            })
-            .catch((error) => {
 
+        setLoading(true);
+
+        const user = new Telepole_User(
+            'seattle',
+            undefined,
+            inputs.email,
+            inputs.displayName,
+            [],
+            inputs.password);
+
+
+
+        try {
+            await user.uploadUser()
+        } catch (error: unknown) {
+
+
+            if(error instanceof FirebaseError) {
                 if(error.code === 'auth/email-already-in-use') setErrorMessage("Email already in use. Log in or use a different email.");
                 if(error.code === 'auth/weak-password') setErrorMessage("Password must be at least 6 characters long.");
+            } else {
+                alert(error);
+            }
 
-                alert(error.message);
-            });
-
+            
+        } finally {
+            setLoading(false);
+        }
         
+
     }
     
     return <form className='space-y-6 px-6 pb-4 flex flex-col justify-between' 
