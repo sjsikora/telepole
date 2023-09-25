@@ -19,6 +19,8 @@ const page:React.FC<pageProps> = () => {
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(true);
 
+    console.log(inputs);
+
     //Check if user is already signed in:
     onAuthStateChanged(auth, (user) => {
         if (user) router.push('/');
@@ -46,9 +48,6 @@ const page:React.FC<pageProps> = () => {
             inputs.displayName,
             [],
             inputs.password);
-
-
-
         try {
             await user.uploadUser()
         } catch (error: unknown) {
@@ -66,7 +65,6 @@ const page:React.FC<pageProps> = () => {
             setLoading(false);
         }
         
-
     }
     
     return <AuthModel

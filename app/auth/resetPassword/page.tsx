@@ -11,6 +11,8 @@ const page:React.FC<pageProps> = () => {
     const [inputs, setInputs] = React.useState({email: ''})
     const [errorMessage, setErrorMessage] = React.useState('');
 
+    console.log(inputs);
+
     const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
