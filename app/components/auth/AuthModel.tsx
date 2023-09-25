@@ -1,7 +1,6 @@
 import React, { ChangeEventHandler } from 'react';
 import Image from 'next/image'
 import logo from '../../../public/assets/full_logo.png'
-import homeIcon from "../../../public/icons/home.svg"
 import Link from 'next/link';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
@@ -13,7 +12,6 @@ type AuthModelProps = {
     inputs: {
         [key: string]: string;
     };
-
 
     handleRegister: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
     handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void
