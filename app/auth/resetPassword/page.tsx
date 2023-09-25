@@ -1,29 +1,32 @@
-import Resetpassword from '../../components/auth/Resetpassword';
-import Link from 'next/link';
+'use client';
 import React from 'react';
-import Image from 'next/image'
-import logo from '../../../public/assets/full_logo.svg'
-import homeIcon from "../../../public/icons/home.svg"
+import AuthModel from '@/app/components/auth/AuthModel';
 
 type pageProps = {
     
 };
 
 const page:React.FC<pageProps> = () => {
-    
-    return <div>
-        <div className='p-5'>
-            <Link href="."><Image alt="Home button" src={homeIcon} width={40}/></Link>
-        </div>
-        
-        <div className='flex flex-col items-center justify-center'>
-            
-            <Image className='p-10' alt="Telepole logo" src={logo} width={400}/>
 
-            <div className='shadow-2xl flex flex-col min-w-[20rem] w-[26vw] max-w-[30rem]'>
-                <Resetpassword />
-            </div>
-        </div>
-    </div>
+    const [inputs, setInputs] = React.useState({email: ''})
+    const [errorMessage, setErrorMessage] = React.useState('');
+
+    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        // TODO: Send email to user to reset password
+    }
+
+    return <AuthModel 
+        typeAuth='Reset Password'
+        errorMessage=''
+        inputs={{email: 'Email'}}
+        handleRegister={handleRegister}
+        handleChangeInput={handleChangeInput}
+    />
 }
 export default page;
