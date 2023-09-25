@@ -1,30 +1,58 @@
-import Login from '../../components/auth/Login';
-import Link from 'next/link';
+'use client';
+import AuthModel from '@/app/components/auth/AuthModel';
+import { auth } from '@/app/js/firebase/firebase';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 import React from 'react';
-import Image from 'next/image'
-import logo from '../../../public/assets/full_logo.svg'
-import homeIcon from "../../../public/icons/home.svg"
+
 
 
 type pageProps = {
-    
+
 };
 
-const page:React.FC<pageProps> = () => {
-    
-    return <div>
-        <div className='p-5'>
-            <Link href="."><Image alt="Home button" src={homeIcon} width={40}/></Link>
-        </div>
-        
-        <div className='flex flex-col items-center justify-center'>
-            
-            <Image className='p-10' alt="Telepole logo" src={logo} width={400}/>
+const page: React.FC<pageProps> = () => {
 
-            <div className='shadow-2xl flex flex-col min-w-[20rem] w-[26vw] max-w-[30rem]'>
-                <Login />
-            </div>
-        </div>
-    </div>
+    const router = useRouter();
+    const [inputs, setInputs] = React.useState({ email: '', password: '' })
+    const [errorMessage, setErrorMessage] = React.useState('');
+
+    console.log(inputs);
+
+    //Check if user is already signed in:
+    onAuthStateChanged(auth, (user) => {
+        if (user) router.push('/');
+    });
+
+    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (inputs.email === '' || inputs.password === '') return alert('Please fill in all fields.');
+
+        const user = signInWithEmailAndPassword(auth, inputs.email, inputs.password)
+            .then((userCredential) => {
+                return userCredential.user;
+            })
+            .catch((error) => {
+
+                if (error.code === 'auth/user-not-found') setErrorMessage("User not found. Please check your email and password and try again.");
+                else if (error.code === 'auth/invalid-email') setErrorMessage("Invalid email. Please check your email and try again.");
+
+            });
+
+    }
+
+    return <AuthModel
+        typeAuth='Log in'
+        errorMessage={errorMessage}
+        inputs={{ email: 'Email', password: 'Password' }}
+        handleRegister={handleRegister}
+        handleChangeInput={handleChangeInput}
+    />
+
 }
 export default page;

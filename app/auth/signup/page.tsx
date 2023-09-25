@@ -1,9 +1,11 @@
-import Signup from '../../components/auth/Signup';
-import Link from 'next/link';
+"use client";
 import React from 'react';
-import Image from 'next/image'
-import logo from '../../../public/assets/full_logo.svg'
-import homeIcon from "../../../public/icons/home.svg"
+import AuthModel from '@/app/components/auth/AuthModel';
+import { Telepole_User } from '@/app/js/types';
+import { FirebaseError } from 'firebase/app';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/app/js/firebase/firebase';
+import { useRouter } from 'next/navigation';
 
 
 type pageProps = {
@@ -11,20 +13,68 @@ type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
-    
-    return <div>
-        <div className='p-5'>
-            <Link href="."><Image alt="Home button" src={homeIcon} width={40}/></Link>
-        </div>
-        
-        <div className='flex flex-col items-center justify-center'>
-            
-            <Image className='p-10' alt="Telepole logo" src={logo} width={400}/>
 
-            <div className='shadow-2xl flex flex-col min-w-[20rem] w-[26vw] max-w-[30rem]'>
-                <Signup />
-            </div>
-        </div>
-    </div>
+    const router = useRouter();
+    const [inputs, setInputs] = React.useState({displayName:'', email: '', password: ''});
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const [loading, setLoading] = React.useState(true);
+
+    //Check if user is already signed in:
+    onAuthStateChanged(auth, (user) => {
+        if (user) router.push('/');
+        if (loading && !user) setLoading(false);
+    });
+
+    if(loading) return <div className='h-screen flex items-center justify-center'> Loading... </div> 
+
+    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputs((prev) => ({...prev, [e.target.name]: e.target.value}));
+    }
+
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (inputs.displayName === '' || inputs.email === '' || inputs.password === '') return alert('Please fill in all fields.');
+
+
+        setLoading(true);
+
+        const user = new Telepole_User(
+            'seattle',
+            undefined,
+            inputs.email,
+            inputs.displayName,
+            [],
+            inputs.password);
+
+
+
+        try {
+            await user.uploadUser()
+        } catch (error: unknown) {
+
+
+            if(error instanceof FirebaseError) {
+                if(error.code === 'auth/email-already-in-use') setErrorMessage("Email already in use. Log in or use a different email.");
+                if(error.code === 'auth/weak-password') setErrorMessage("Password must be at least 6 characters long.");
+            } else {
+                alert(error);
+            }
+
+            
+        } finally {
+            setLoading(false);
+        }
+        
+
+    }
+    
+    return <AuthModel
+        typeAuth='Sign up'
+        errorMessage={errorMessage}
+        inputs={{displayName: 'Display Name', email: 'Email', password: 'Password'}}
+        handleRegister={handleRegister}
+        handleChangeInput={handleChangeInput}
+    />
 }
 export default page;

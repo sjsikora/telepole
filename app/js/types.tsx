@@ -231,14 +231,6 @@ export class Telepole_User {
 
 
 
-
-
-
-
-
-
-
-
     getUserDataByID(firebaseUserID: string) {
         const collectionRef = collection(this.firebaseRef, `users`);
 
