@@ -4,7 +4,6 @@ import Navbar from '../components/navbar/Navbar';
 import { useSearchParams } from 'next/navigation';
 import InitalSearchPage from '../components/search/initial/InitalSearchPage';
 import TerminalSearchPage from '../components/search/terminal/TerminalSearchPage';
-import SearchBox from '../components/search/initial/SearchBox';
 
 type pageProps = {
     
@@ -16,8 +15,6 @@ const page:React.FC<pageProps> = () => {
     const id = searchParams.get('s');
 
     console.log(id);
-
-    
 
     return <div>
         <Navbar />
