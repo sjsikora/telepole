@@ -5,6 +5,14 @@ import { ref } from 'firebase/storage';
 import { auth } from '@/app/js/firebase/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+
+/* 
+    This is the Singleton class. There are a few places such as the search
+    compontent and the poster upload form that need to share consistent values.
+    This class is used to store those values and make them accessible to all 
+    components.
+
+*/
 export class Singleton {
     
     private static instance: Singleton;
@@ -54,6 +62,10 @@ export class Singleton {
     }
 }
 
+/*
+    The poster class has all the fields that are repersented in the database.
+    This also contains the function to upload the poster to the database.
+*/
 
 export class Telepole_Poster {
 
@@ -79,7 +91,7 @@ export class Telepole_Poster {
         this.firebaseRef = firestore;
     }
 
-    async uploadImage(imageRef: string): Promise<boolean> {
+    private async uploadImage(imageRef: string): Promise<boolean> {
 
         if (!this.imageUpload) throw new Error('No image to upload.');
 
@@ -124,7 +136,6 @@ export class Telepole_Poster {
         expiration: Date,
         reccuring: boolean,
         telepoles = [] //TODO: Add telepoles
-
     ): Promise<boolean> {
 
 
@@ -167,7 +178,6 @@ export class Telepole_Poster {
 }
 
 
-
 class Sticker {
 
     id: string;
@@ -205,6 +215,11 @@ class Pole {
         this.stickersID = stickersID;
     }
 }
+
+/*
+    The user class has all the fields that are repersented in the database.
+    This also contains the function to upload the user to the database.
+*/
 
 export class Telepole_User {
 
