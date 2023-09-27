@@ -41,18 +41,11 @@ const page:React.FC<pageProps> = () => {
 
         setLoading(true);
 
-        const user = new Telepole_User(
-            'seattle',
-            undefined,
-            inputs.email,
-            inputs.displayName,
-            [],
-            inputs.password);
+        const user = new Telepole_User('seattle');
         try {
-            await user.uploadUser()
+            await user.uploadUser(inputs.email, inputs.password, inputs.displayName);
         } catch (error: unknown) {
-
-
+            
             if(error instanceof FirebaseError) {
                 if(error.code === 'auth/email-already-in-use') setErrorMessage("Email already in use. Log in or use a different email.");
                 if(error.code === 'auth/weak-password') setErrorMessage("Password must be at least 6 characters long.");

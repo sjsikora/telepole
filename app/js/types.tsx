@@ -5,108 +5,85 @@ import { ref } from 'firebase/storage';
 import { auth } from '@/app/js/firebase/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+
 export class Telepole_Poster {
 
-    city : string; //must be one of "seattle" or "kelowna"
-    owner : string;
-    title: string;
-    description: string;
-    neighborhood : string;
-    imageRef : string | undefined;
-    keywords : string;
-    created : Date;
-    expiration : Date;
-    reccuring : boolean;
+    // Required Values for any Poster Object
+    city: string;
+
+    title: string | undefined;
+    imageRef: string | undefined;    
+    owner: string | undefined;
+    keywords: string | undefined;
+    description: string | undefined;
+    neighborhood: string | undefined;
+    created: Date | undefined;
+    expiration: Date | undefined;
+    reccuring: boolean | undefined;
     imageUpload: any | undefined;
-    firebaseRef : Firestore;
-
-    constructor(
-        city: string,
-        id?: string,
-        owner?: string,
-        title?: string,
-        description?: string,
-        neighborhood?: string,
-        keywords?: string,
-        created?: Date,
-        expiration?: Date,
-        reccuring?: boolean,
-        imageUpload?: any | null,
-    ) {
-
-        this.firebaseRef = firestore;
-
-        if (id) {
-        const collectionRef = collection(this.firebaseRef, `cities/${city}/posters`);
-    
-            getDocs(collectionRef)
-                .then((snapshot) => {
-                    snapshot.docs.forEach((doc) => {
-                        if(doc.id == id) {
-
-                            this.city = city;
-    
-                            this.owner = doc.data().owner;
-                            this.title = doc.data().title;
-                            this.description = doc.data().description;
-                            this.neighborhood = doc.data().neighborhood;
-                            this.imageRef = doc.data().imageRef;
-                            this.keywords = doc.data().keywords;
-                            this.created = doc.data().created;
-                            this.expiration = doc.data().expiration;
-                            this.reccuring = doc.data().reccuring;
-                            return;
-                        }
-                    })
-                    throw new Error('Poster not found.');  
-                })
-                .catch((error) => {
-                    throw new Error(error);
-                })
-
-        }
-
-        if(owner === undefined || 
-            title === undefined ||
-            description === undefined ||
-            neighborhood === undefined ||
-            keywords === undefined ||
-            created === undefined ||
-            expiration === undefined ||
-            reccuring === undefined
-        ) throw new Error('Fields need to be filled out');
 
 
+    firebaseRef: Firestore;
+
+    constructor(city: string) {
         this.city = city;
-        this.owner = owner;
-        this.title = title;
-        this.description = description;
-        this.neighborhood = neighborhood;
-        this.keywords = keywords;
-        this.created = created;
-        this.expiration = expiration;
-        this.reccuring = reccuring;
-        this.imageUpload = imageUpload;
-
+        this.firebaseRef = firestore;
     }
-
 
     async uploadImage(imageRef: string): Promise<boolean> {
 
-        if(!this.imageUpload) throw new Error('No image to upload.');
-        
+        if (!this.imageUpload) throw new Error('No image to upload.');
+
         const storageRef = ref(storage, `images/${this.city}/${imageRef}`);
         await uploadBytes(storageRef, this.imageUpload)
-        .catch((error) => {
-            throw new Error(error);
-        })
+            .catch((error) => {
+                throw new Error(error);
+            })
 
         return true;
     }
 
+    populatefields(
+        owner: string,
+        title: string,
+        description: string,
+        neighborhood: string,
+        imageRef: string,
+        keywords: string,
+        created: Date,
+        expiration: Date,
+        reccuring: boolean
+    ) {
+        this.owner = owner;
+        this.title = title;
+        this.description = description;
+        this.neighborhood = neighborhood;
+        this.imageRef = imageRef;
+        this.keywords = keywords;
+        this.created = created;
+        this.expiration = expiration;
+        this.reccuring = reccuring;
+    }
 
 
-    async uploadPoster(): Promise<boolean> {
+    async uploadPoster(
+        title: string,
+        description: string,
+        neighborhood: string,
+        imageUpload: any,
+        keyword: string,
+        expiration: Date,
+        reccuring: boolean,
+        telepoles = [] //TODO: Add telepoles
+
+    ): Promise<boolean> {
+
+
+        if(auth.currentUser === null) throw new Error('User not logged in.');
+
+        this.imageUpload = imageUpload;
+        this.created = new Date();
+
 
         let imageRef = this.city + "_" + this.imageUpload.name + Date.now();
 
@@ -115,19 +92,19 @@ export class Telepole_Poster {
                 throw new Error(error);
             })
 
-        const posterRef = collection(this.firebaseRef, `cities/${this.city}/posters`);
+        const posterRef = collection(this.firebaseRef, `cities/${this.city}/neighborhood/${neighborhood}/posters`);
 
         addDoc(posterRef, {
             city: this.city,
-            owner: this.owner,
-            title: this.title,
-            description: this.description,
-            neighborhood: this.neighborhood,
+            owner: auth.currentUser.uid,
+            title: title,
+            description: description,
+            neighborhood: neighborhood,
             imageRef: imageRef,
-            keywords: this.keywords,
+            keyword: keyword,
             created: this.created,
-            expiration: this.expiration,
-            reccuring: this.reccuring,
+            expiration: expiration,
+            reccuring: reccuring,
         })
             .then(() => {
                 return true;
@@ -138,17 +115,18 @@ export class Telepole_Poster {
 
         return false;
     }
-
 }
+
+
 
 class Sticker {
 
     id: string;
     title: string;
     imageRef: string;
-    httpRef : string;
+    httpRef: string;
 
-    constructor(id: string, title: string, imageRef: string, httpRef : string) {
+    constructor(id: string, title: string, imageRef: string, httpRef: string) {
         this.id = id;
         this.title = title;
         this.imageRef = imageRef;
@@ -160,15 +138,15 @@ class Sticker {
 class Pole {
 
     id: number;
-    location : {
+    location: {
         lat: number;
         lng: number;
     }
     postersID: string[];
     stickersID: string[];
-    fireBaseStorageRef : FirebaseStorage;
+    fireBaseStorageRef: FirebaseStorage;
 
-    constructor(id: number, location : {lat: number, lng: number}, postersID: string[], stickersID: string[]) {
+    constructor(id: number, location: { lat: number, lng: number }, postersID: string[], stickersID: string[]) {
 
         this.fireBaseStorageRef = storage;
 
@@ -177,7 +155,6 @@ class Pole {
         this.postersID = postersID;
         this.stickersID = stickersID;
     }
-
 }
 
 export class Telepole_User {
@@ -185,34 +162,27 @@ export class Telepole_User {
     display_name: string | undefined;
     email: string | undefined;
     password: string | undefined;
-    mainCity : string | undefined;
-    firebaseUserID : string | undefined;
+    mainCity: string | undefined;
+    firebaseUserID: string | undefined;
     ownedPosters: string[] | undefined;
 
     firebaseRef: Firestore;
     firebaseAuthRef: any;
-    
 
-    constructor(mainCity: string, firebaseUserID: string | undefined, email: string | undefined, display_name: string | undefined, ownedPosters: string[], password: string | undefined) {
+
+    constructor(mainCity: string) {
         this.mainCity = mainCity;
-        this.firebaseUserID = firebaseUserID;
-        this.password = password;
-        this.email = email;
-        this.display_name = display_name;
-        this.ownedPosters = ownedPosters;
         this.firebaseRef = firestore;
         this.firebaseAuthRef = auth;
     }
 
-    async uploadUser() {
+    async uploadUser(email: string, password: string, display_name: string) {
 
-        if(this.email === undefined || this.password === undefined) throw new Error('Fields need to be filled out');
+        if (this.email === undefined || this.password === undefined) throw new Error('Fields need to be filled out');
 
         await createUserWithEmailAndPassword(this.firebaseAuthRef, this.email, this.password)
-        
-        if(auth.currentUser === null) throw new Error('User not Created.');
 
-        this.firebaseUserID = auth.currentUser.uid;
+        if (auth.currentUser === null) throw new Error('User not Created.');
 
         //Dump Password
         this.password = '';
@@ -222,14 +192,12 @@ export class Telepole_User {
 
         addDoc(userRef, {
             mainCity: this.mainCity,
-            firebaseUserID: this.firebaseUserID,
+            firebaseUserID: auth.currentUser.uid,
             email: this.email,
             display_name: this.display_name,
             ownedPosters: this.ownedPosters
-        })        
+        })
     }
-
-
 
     getUserDataByID(firebaseUserID: string) {
         const collectionRef = collection(this.firebaseRef, `users`);
@@ -237,7 +205,7 @@ export class Telepole_User {
         getDocs(collectionRef)
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
-                    if(doc.data().firebaseUserID == firebaseUserID) {
+                    if (doc.data().firebaseUserID == firebaseUserID) {
 
                         this.display_name = doc.data().display_name;
                         this.email = doc.data().email;
@@ -247,12 +215,11 @@ export class Telepole_User {
                         return;
                     }
                 })
-                throw new Error('User not found.');  
+                throw new Error('User not found.');
             })
-
     }
 
 
-    
+
 
 }

@@ -31,7 +31,7 @@ const Poster:React.FC<PosterProps> = () => {
         description: 'required',
         neighborhood: 'required',
         imageRef: '',
-        keywords: 'required',
+        keyword: 'required',
         reccuring : false,
         expiration: ''
     });
@@ -86,22 +86,18 @@ const Poster:React.FC<PosterProps> = () => {
         }
 
         // Upload image to firebase storage
-        let poster = new Telepole_Poster(
-            city,
-            undefined,
-            auth.currentUser?.uid,
+        let poster = new Telepole_Poster(city);
+
+
+        await poster.uploadPoster(
             inputs.title,
             inputs.description,
             inputs.neighborhood,
-            inputs.keywords,
-            currentDate,
+            imageUpload,
+            inputs.keyword,
             expirationDate,
             inputs.reccuring,
-            imageUpload
-        );
-
-
-        await poster.uploadPoster()
+         )
             .catch((error) => {
                 console.log(error);
                 setErrorMessage(error.message);
@@ -109,7 +105,7 @@ const Poster:React.FC<PosterProps> = () => {
                 return;
             })
 
-        router.push('/');
+        //router.push('/');
     }
 
     console.log(inputs);
@@ -145,8 +141,8 @@ const Poster:React.FC<PosterProps> = () => {
             </div>
 
             <div className='py-2'>
-                <label htmlFor="keywords"> Event Type </label>
-                <select id="keywords" name="keywords" 
+                <label htmlFor="keyword"> Event Type </label>
+                <select id="keyword" name="keyword" 
                     className='border-2 border-gray-300 rounded-md p-2 w-full'
                     onChange={(e) => handleChangeInput(e)}>
                     <option value="placeHolder"> Choose an Event Type </option>
