@@ -5,6 +5,55 @@ import { ref } from 'firebase/storage';
 import { auth } from '@/app/js/firebase/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+export class Singleton {
+    
+    private static instance: Singleton;
+
+    keywords: { [key: string]: string; };
+    citiesNeighborhoods: { [key: string]: {[key: string]: string} };
+
+
+    private constructor() {
+        this.keywords = {
+            "lostAndFound": "Lost and Found",
+            "music": "Music",
+            "food": "Food",
+            "clubsAndOrganizations": "Clubs and Organizations",
+            "jobsAndServices": "Jobs and Services",
+            "yardSales": "Yard Sales",
+            "conventions": "Conventions",
+            "other": "Other"
+        };
+
+        this.citiesNeighborhoods = {
+            'seattle': {
+                "queenAnne": "Queen Anne",
+                "universityDistrict": "University District",
+            },
+            'kelowna': {
+                'ubco': 'UBCO',
+                'downtown': 'Downtown',
+            }
+        }
+    }
+
+    public static getInstance(): Singleton {
+        if (!Singleton.instance) {
+            Singleton.instance = new Singleton();
+        }
+
+        return Singleton.instance;
+    }
+
+    getKeywords() {
+        return this.keywords;
+    }
+
+    getCitiesNeighborhoods() {
+        return this.citiesNeighborhoods;
+    }
+}
+
 
 export class Telepole_Poster {
 
@@ -178,25 +227,27 @@ export class Telepole_User {
 
     async uploadUser(email: string, password: string, display_name: string) {
 
-        if (this.email === undefined || this.password === undefined) throw new Error('Fields need to be filled out');
+        console.log(email, password, display_name);
 
-        await createUserWithEmailAndPassword(this.firebaseAuthRef, this.email, this.password)
+        if (email === '' || password === '') throw new Error('Fields need to be filled out');
+
+        await createUserWithEmailAndPassword(this.firebaseAuthRef, email, password)
 
         if (auth.currentUser === null) throw new Error('User not Created.');
-
-        //Dump Password
-        this.password = '';
 
         //Add user to database
         const userRef = collection(this.firebaseRef, `users`);
 
-        addDoc(userRef, {
+        await addDoc(userRef, {
             mainCity: this.mainCity,
             firebaseUserID: auth.currentUser.uid,
-            email: this.email,
-            display_name: this.display_name,
-            ownedPosters: this.ownedPosters
+            email: email,
+            display_name: display_name,
+            ownedPosters: []
         })
+            .catch((error) => {
+                throw new Error(error);
+            })
     }
 
     getUserDataByID(firebaseUserID: string) {

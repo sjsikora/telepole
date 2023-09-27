@@ -33,8 +33,6 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
             <SearchBox iconName='groups' name='Event' selected={searchbyEvents} onClick={eventButtonPress} />
         </div>
 
-        <div className='md:block hidden px-2'> medium</div>
-
         <div className='flex justify-center p-2'>
             <SearchBar searchableUnits={["kdf"]} />
         </div>

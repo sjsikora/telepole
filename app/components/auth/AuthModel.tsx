@@ -20,8 +20,6 @@ type AuthModelProps = {
 
 const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, handleRegister, handleChangeInput }) => {
 
-
-
     return <div>
         <div className='flex flex-col items-center justify-center'>
             <Link href="."><Image className='p-10' alt="Telepole logo" src={logo} width={400} /> </Link>
@@ -73,8 +71,6 @@ const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, h
                             <Link className="text-spgreen underline" href="./auth/login">Log in</Link>
                         </div>
                         }
-
-
 
                     </div>
                     <div />

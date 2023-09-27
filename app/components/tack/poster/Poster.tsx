@@ -26,6 +26,11 @@ const Poster:React.FC<PosterProps> = () => {
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(false);
 
+
+    useEffect(() => {
+        
+    }) 
+
     const [inputs, setInputs] = React.useState({
         title:'required',
         description: 'required',
@@ -151,7 +156,7 @@ const Poster:React.FC<PosterProps> = () => {
                     <option value="food">Food</option>
                     <option value="clubsAndOrganizations">Clubs and Organizations</option>
                     <option value="jobsAndServices">Jobs and Services</option>
-                    <option value="garageOrYardSales">Garage or Yard Sale</option>
+                    <option value="yardSales">Garage or Yard Sale</option>
                     <option value="conventions">Conventions</option>
                     <option value="other">Other</option>
                 </select>
