@@ -19,7 +19,7 @@ const page:React.FC<pageProps> = () => {
     return <div>
         <Navbar />
 
-        {id ? <TerminalSearchPage searchKeyword={id} /> : <InitalSearchPage />}
+        {id ? <TerminalSearchPage searchKeyword={id} city='seattle' /> : <InitalSearchPage />}
         
     </div>
 }

@@ -21,15 +21,9 @@ const Poster:React.FC<PosterProps> = () => {
         });
     }, []);
 
-
     const [imageUpload, setImageUpload] = React.useState<any>(null);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(false);
-
-
-    useEffect(() => {
-        
-    }) 
 
     const [inputs, setInputs] = React.useState({
         title:'required',
@@ -93,7 +87,6 @@ const Poster:React.FC<PosterProps> = () => {
         // Upload image to firebase storage
         let poster = new Telepole_Poster(city);
 
-
         await poster.uploadPoster(
             inputs.title,
             inputs.description,
@@ -110,7 +103,7 @@ const Poster:React.FC<PosterProps> = () => {
                 return;
             })
 
-        //router.push('/');
+        router.push('/');
     }
 
     console.log(inputs);

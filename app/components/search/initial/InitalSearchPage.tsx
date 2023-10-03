@@ -23,7 +23,6 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
         event.preventDefault();
         setSearchbyEvents(true);
         setSearchableUnits(singletonRef.current.getKeywords());
-        console.log(searchableUnits);
     }
 
 
