@@ -1,24 +1,29 @@
 import React, { MouseEventHandler } from 'react';
 import SearchBar from './SearchBar';
 import SearchBox from './SearchBox';
+import { Singleton } from '@/app/js/types';
 
 type InitalSearchPageProps = {
     
 };
 
 const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
-
-
+    
     const [searchbyEvents, setSearchbyEvents] = React.useState(false);
-
+    const singletonRef = React.useRef<Singleton>(Singleton.getInstance());
+    const [searchableUnits, setSearchableUnits] = React.useState(singletonRef.current.getKeywords());
+    
     const neighborhoodButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
+        event.preventDefault();
         setSearchbyEvents(false);
+        setSearchableUnits(singletonRef.current.getCitiesNeighborhoods()['seattle']);
     }
 
     const eventButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
+        event.preventDefault();
         setSearchbyEvents(true);
+        setSearchableUnits(singletonRef.current.getKeywords());
     }
-
 
 
     // The spacer is a hacky solution, if a better solution is found, use it.
@@ -34,7 +39,7 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
         </div>
 
         <div className='flex justify-center p-2'>
-            <SearchBar searchableUnits={["kdf"]} />
+            <SearchBar searchableUnits={searchableUnits} />
         </div>
 
 
