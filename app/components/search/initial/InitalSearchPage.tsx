@@ -11,7 +11,7 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
     
     const [searchbyEvents, setSearchbyEvents] = React.useState(false);
     const singletonRef = React.useRef<Singleton>(Singleton.getInstance());
-    const [searchableUnits, setSearchableUnits] = React.useState(singletonRef.current.getKeywords());
+    const [searchableUnits, setSearchableUnits] = React.useState(singletonRef.current.getCitiesNeighborhoods()['seattle']);
     
     const neighborhoodButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
@@ -23,6 +23,7 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
         event.preventDefault();
         setSearchbyEvents(true);
         setSearchableUnits(singletonRef.current.getKeywords());
+        console.log(searchableUnits);
     }
 
 
@@ -41,7 +42,6 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
         <div className='flex justify-center p-2'>
             <SearchBar searchableUnits={searchableUnits} />
         </div>
-
 
 
     </div>
