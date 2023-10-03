@@ -28,8 +28,8 @@ const page:React.FC<pageProps> = () => {
                         </p>
                         <br />
                         <p>
-                            I could not have built this without support. In particular, I want to mention Mira who helped me with the theme of the website. My brother and Ethan
-                            for endless flex, div, and reposive design help. 
+                            I could not have built this without support. In particular, I want to mention Mira who helped me with everything graphic (inculding the wonderful logo). My brother and Ethan
+                            for endless flex, div, and responsive design help. 
                         </p>
                         <br />
                         <p> Page built with React, Next.js, Firebase, and Tailwind.</p>
