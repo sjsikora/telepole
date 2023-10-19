@@ -1,6 +1,8 @@
-<p align="center"><img src="public/assets/anti_full_logo.svg" align="center" alt="Telepole Logo" width="200"/> </p>
+<p align="center"><img src="public/assets/anti_full_logo.png" align="center" alt="Telepole Logo" width="200"/> </p>
 <h1></h1>
-<h1 align="center"> Welcome to Telepole: Your online telephone pole. vALPHA </h3>
+<h1 align="center"> Welcome to Telepole: Your online telephone pole. </h3>
+
+CURRENTLY IN ALPHA.
 
 Recently, I have found myself looking at telephone poles. A lot. There is some factor that just draws me to them -- I think it is the hyper-local aspect to it. Here are people trying to start their club or podcast all in my neighborhood.
 
