@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler } from 'react';
 import Image from 'next/image'
-import logo from '../../../public/assets/full_logo.png'
+import logo from '../../../public/assets/full_logo.svg'
 import Link from 'next/link';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
