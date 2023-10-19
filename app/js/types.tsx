@@ -138,21 +138,26 @@ export class Telepole_Poster {
         telepoles = [] //TODO: Add telepoles
     ): Promise<boolean> {
 
-
         if(auth.currentUser === null) throw new Error('User not logged in.');
 
         this.imageUpload = imageUpload;
         this.created = new Date();
 
-
-        let imageRef = this.city + "_" + this.imageUpload.name + Date.now();
+        // Ensure that that the file type is supported. Throw error if not.
+        const fileType = this.imageUpload.name.substring(this.imageUpload.name.lastIndexOf('.') + 1);
+        const acceptableFileTypes = ['png', 'jpg', 'jpeg', 'heic', 'heif'];
+        if(!acceptableFileTypes.includes(fileType)) throw new Error('Can only upload images of type png, jpg, jpeg, heic, or heif.');
+        
+        // Create the image reference. This may not be the best way of
+        // naming files.
+        const imageRef = this.city + "_" + this.neighborhood + "_" + Date.now() + "." + fileType;
 
         await this.uploadImage(imageRef)
             .catch((error) => {
                 throw new Error(error);
             })
 
-        const posterRef = collection(this.firebaseRef, `cities/${this.city}/neighborhood/${neighborhood}/posters`);
+        const posterRef = collection(this.firebaseRef, `cities/${this.city}/posters`);
 
         addDoc(posterRef, {
             city: this.city,
