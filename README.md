@@ -1,4 +1,4 @@
-<p align="center"><img src="public/assets/full_logo.svg" align="center" alt="Telepole Logo" width="200"/> </p>
+<p align="center"><img src="public/assets/anti_full_logo.svg" align="center" alt="Telepole Logo" width="200"/> </p>
 <h1></h1>
 <h1 align="center"> Welcome to Telepole: Your online telephone pole. vALPHA </h3>
 
