@@ -115,7 +115,7 @@ const Poster:React.FC<PosterProps> = () => {
                 <label htmlFor="title"> Title</label>
                 <input type="title" name="title" id="title"
                     className='border-2 border-gray-300 rounded-md p-2 w-full'
-                    placeholder='Mouse Rat Concert for all Ages'
+                    placeholder='Mouse Rat Concert for All Ages'
                     onChange={(e) => handleChangeInput(e)} />
             </div>
 
