@@ -11,12 +11,17 @@ type pageProps = {
 
 const page:React.FC<pageProps> = () => {
 
-    const [neighborhood, setNeighborhood] = React.useState<string>('');
+    const [neighborhood, setNeighborhood] = React.useState<string>(''); 
+    const [city, setCity] = React.useState<string>('');
+
+    function setCityModal(city: string) {
+
+    }
 
     return <div>
 
         <div>
-            <CityModal open = {true} onClose = {() => {}} possibleCities = {["seattle", "kelowna"]} children = "test" /> 
+            <CityModal open={true} onClose={() => { } } setCityModal={setCityModal} possibleCities={Object.keys(citiesNeighborhoods)} children="test" /> 
         </div>
 
         <div>

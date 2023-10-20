@@ -17,7 +17,6 @@ const page: React.FC<pageProps> = () => {
     const [inputs, setInputs] = React.useState({ email: '', password: '' })
     const [errorMessage, setErrorMessage] = React.useState('');
 
-    console.log(inputs);
 
     //Check if user is already signed in:
     onAuthStateChanged(auth, (user) => {
