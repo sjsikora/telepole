@@ -1,14 +1,20 @@
-type PosterKeywords = {
+export type SingleMap = {
     [key: string]: string
 };
 
-type CitiesNeighborhoods = {
+export type DoubleMap = {
     [key: string]: {
         [key: string]: string
     }
 };
 
-export const keywords: PosterKeywords = {
+
+/*
+    IMPORTANT:
+        EVERY SINGLE SETTING MUST HAVE (variableName): (Name to Present to User)
+*/
+
+export const keywords: SingleMap = {
     "lostAndFound": "Lost and Found",
     "music": "Music",
     "food": "Food",
@@ -19,7 +25,12 @@ export const keywords: PosterKeywords = {
     "other": "Other"
 };
 
-export const citiesNeighborhoods : CitiesNeighborhoods = {
+export const cities: SingleMap = {
+    "seattle": "Seattle",
+    "kelowna": "Kelowna"
+};
+
+export const citiesNeighborhoods : DoubleMap = {
     'seattle': {
         "queenAnne": "Queen Anne",
         "universityDistrict": "University District",

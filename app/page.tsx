@@ -2,16 +2,15 @@
 import React from 'react';
 import Navbar from './components/navbar/Navbar';
 import MapHandler from './components/index/MapHandler';
-import DropdownCitySelect from './components/index/DropdownCitySelect';
 import CityModal from './components/cityModal/CityModal';
-import { citiesNeighborhoods } from './js/setting';
+import { cities } from './js/setting';
 
 type pageProps = {
 };
 
-const page:React.FC<pageProps> = () => {
+const page: React.FC<pageProps> = () => {
 
-    const [neighborhood, setNeighborhood] = React.useState<string>(''); 
+    const [neighborhood, setNeighborhood] = React.useState<string>('');
     const [city, setCity] = React.useState<string>('');
     const [modalOpen, setModalOpen] = React.useState<boolean>(true);
 
@@ -24,9 +23,8 @@ const page:React.FC<pageProps> = () => {
     }
 
     return <div>
-
         <div>
-            <CityModal open={modalOpen} onClose={onClose} setCityModal={setCityModal} possibleCities={Object.keys(citiesNeighborhoods)} children="test" /> 
+            <CityModal open={modalOpen} onClose={onClose} setCityModal={setCityModal} possibleCities={cities} />
         </div>
 
         <div>
@@ -38,7 +36,11 @@ const page:React.FC<pageProps> = () => {
             <div className='w-full md:w-1/2 flex items-center justify-center'>
                 <div className='md:h-screen p-5 flex flex-col justify-evenly'>
                     <div className='flex flex-col items-center justify-center'>
-                        <DropdownCitySelect />
+                        <div>
+                            <p className='text-5xl font-bold'> Welcome to Telepole. </p>
+                            <p className='pl-5 text-2xl'> Your connection to {!modalOpen ? city : "... "} streamlined.</p>
+                            <p className='pl-5 text-2xl'> Your online telephone pole.</p>
+                        </div>
                     </div>
 
                     <div>
