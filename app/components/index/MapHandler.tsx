@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import MainMap from './MainMap';
-import StaticMap from '../../../public/assets/map_fallback.png'
+import logo from '../../../public/assets/small_icon.svg'
 
 type MapHandlerProps = {
     neighborhood: string
@@ -10,8 +10,10 @@ type MapHandlerProps = {
 
 const MapHandler:React.FC<MapHandlerProps> = ({neighborhood}) => {
 
-    if(neighborhood === '') return <div className='md:w-1/2 md:h-auto h-1/2 overflow-hidden'>
-        <Image src={StaticMap} alt={"A map to be blurred"}/>
+    if(neighborhood === '') return <div className='md:w-1/2 overflow-hidden'>
+        <div className='h-screen flex justify-center items-center'>
+            <Image src={logo} alt='map' />
+        </div>
     </div>
 
     return <div className='md:w-1/2 md:h-auto h-1/2 overflow-hidden'>

@@ -4,6 +4,7 @@ import Navbar from './components/navbar/Navbar';
 import MapHandler from './components/index/MapHandler';
 import DropdownCitySelect from './components/index/DropdownCitySelect';
 import CityModal from './components/cityModal/CityModal';
+import { citiesNeighborhoods } from './js/setting';
 
 type pageProps = {
 };
@@ -15,7 +16,7 @@ const page:React.FC<pageProps> = () => {
     return <div>
 
         <div>
-            <CityModal open = {true} onClose = {() => {}} children = "test" /> 
+            <CityModal open = {true} onClose = {() => {}} possibleCities = {["seattle", "kelowna"]} children = "test" /> 
         </div>
 
         <div>
