@@ -17,10 +17,10 @@ const page: React.FC<pageProps> = () => {
     const [inputs, setInputs] = React.useState({ email: '', password: '' })
     const [errorMessage, setErrorMessage] = React.useState('');
 
-
     //Check if user is already signed in:
     onAuthStateChanged(auth, (user) => {
         if (user) router.push('/');
+        
     });
 
     const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {

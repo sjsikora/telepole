@@ -13,15 +13,20 @@ const page:React.FC<pageProps> = () => {
 
     const [neighborhood, setNeighborhood] = React.useState<string>(''); 
     const [city, setCity] = React.useState<string>('');
+    const [modalOpen, setModalOpen] = React.useState<boolean>(true);
 
     function setCityModal(city: string) {
+        setCity(city);
+    }
 
+    function onClose(e: React.MouseEvent<HTMLButtonElement>) {
+        setModalOpen(false);
     }
 
     return <div>
 
         <div>
-            <CityModal open={true} onClose={() => { } } setCityModal={setCityModal} possibleCities={Object.keys(citiesNeighborhoods)} children="test" /> 
+            <CityModal open={modalOpen} onClose={onClose} setCityModal={setCityModal} possibleCities={Object.keys(citiesNeighborhoods)} children="test" /> 
         </div>
 
         <div>
