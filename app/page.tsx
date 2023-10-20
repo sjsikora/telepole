@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from './components/navbar/Navbar';
 import MapHandler from './components/index/MapHandler';
 import CityModal from './components/cityModal/CityModal';
-import { cities } from './js/setting';
+import { cities, citiesNeighborhoods} from './js/setting';
 
 type pageProps = {
 };
@@ -15,6 +15,7 @@ const page: React.FC<pageProps> = () => {
     const [modalOpen, setModalOpen] = React.useState<boolean>(true);
 
     function setCityModal(city: string) {
+        // If users dont do anything need to fix
         setCity(city);
     }
 
@@ -23,13 +24,8 @@ const page: React.FC<pageProps> = () => {
     }
 
     return <div>
-        <div>
-            <CityModal open={modalOpen} onClose={onClose} setCityModal={setCityModal} possibleCities={cities} />
-        </div>
-
-        <div>
-            <Navbar />
-        </div>
+        <CityModal open={modalOpen} onClose={onClose} setCityModal={setCityModal} possibleCities={cities} />
+        <Navbar />
 
         <div className='w-full h-[93vh] flex-col md:flex-row md:flex md:justify-between'>
 
@@ -45,20 +41,16 @@ const page: React.FC<pageProps> = () => {
 
                     <div>
                         <div className='flex flex-col items-center justify-center p-5'>
-
                             <div className='flex flex-col items-center justify-center p-5'>
                                 <div className='p-5 w-[20rem] flex bg-spgreen rounded-xl text-white text-xl items-center justify-center overflow-hidden'>
                                     Find your neighborhood
                                 </div>
                             </div>
-
                             <div className='p-5 w-[20rem] flex bg-spgreen rounded-xl text-white text-xl items-center justify-center'>
                                 Find by Event
                             </div>
                         </div>
-
                     </div>
-
                     <div />
                 </div>
             </div>

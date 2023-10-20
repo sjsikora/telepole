@@ -25,11 +25,9 @@ const CityModal:React.FC<CityModalProps> = ({ open, onClose, setCityModal, possi
                 className='border-2 border-gray-300 rounded-md p-2 w-32'
                 onChange={(e) => setCityModal(e.target.value)} >
 
-
                     {Object.keys(possibleCities).map((key) => {
-                        return <option value={key}>{possibleCities[key]}</option>
+                        return <option key={key} value={key}>{possibleCities[key]}</option>
                     })} 
-
 
                 </select>
                 <button onClick={onClose}>

@@ -8,10 +8,19 @@ export type DoubleMap = {
     }
 };
 
+export type coordinates = {
+    [key: string]: {
+        latitude: number,
+        longitude: number,
+        zoom: number
+    }
+};
 
 /*
     IMPORTANT:
         EVERY SINGLE SETTING MUST HAVE (variableName): (Name to Present to User)
+
+    variableName is the name consistent with firebase database.
 */
 
 export const keywords: SingleMap = {
@@ -40,3 +49,11 @@ export const citiesNeighborhoods : DoubleMap = {
         'downtown': 'Downtown',
     }
 };
+
+export const mapboxNeighborhood: coordinates = {
+    "queenAnne": {
+        longitude: -122.359749,
+        latitude: 47.639396,
+        zoom: 13,
+    }
+}
