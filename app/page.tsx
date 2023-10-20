@@ -1,14 +1,23 @@
+'use client';
 import React from 'react';
 import Navbar from './components/navbar/Navbar';
 import MapHandler from './components/index/MapHandler';
 import DropdownCitySelect from './components/index/DropdownCitySelect';
+import CityModal from './components/cityModal/CityModal';
 
 type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
 
+    const [neighborhood, setNeighborhood] = React.useState<string>('');
+
     return <div>
+
+        <div>
+            <CityModal open = {true} onClose = {() => {}} children = "test" /> 
+        </div>
+
         <div>
             <Navbar />
         </div>
@@ -40,7 +49,7 @@ const page:React.FC<pageProps> = () => {
                     <div />
                 </div>
             </div>
-            <MapHandler />
+            <MapHandler neighborhood={neighborhood} />
         </div>
     </div>
 }

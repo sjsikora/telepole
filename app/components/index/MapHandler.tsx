@@ -3,15 +3,13 @@ import React from 'react';
 import MainMap from './MainMap';
 
 type MapHandlerProps = {
-    
+    neighborhood: string
 };
 
-const MapHandler:React.FC<MapHandlerProps> = () => {
+const MapHandler:React.FC<MapHandlerProps> = ({neighborhood}) => {
 
-    const [neighborhoodString, setNeighborhoodString] = React.useState('queenAnne');
-    
     return <div className='md:w-1/2 md:h-auto h-1/2 overflow-hidden'>
-        <MainMap neighborhoodString={neighborhoodString}/>
+        <MainMap neighborhoodString={neighborhood}/>
     </div>
 }
 export default MapHandler;

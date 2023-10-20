@@ -5,63 +5,6 @@ import { ref } from 'firebase/storage';
 import { auth } from '@/app/js/firebase/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-
-/* 
-    This is the Singleton class. There are a few places such as the search
-    compontent and the poster upload form that need to share consistent values.
-    This class is used to store those values and make them accessible to all 
-    components.
-
-*/
-export class Singleton {
-    
-    private static instance: Singleton;
-
-    keywords: { [key: string]: string; };
-    citiesNeighborhoods: { [key: string]: {[key: string]: string} };
-
-
-    private constructor() {
-        this.keywords = {
-            "lostAndFound": "Lost and Found",
-            "music": "Music",
-            "food": "Food",
-            "clubsAndOrganizations": "Clubs and Organizations",
-            "jobsAndServices": "Jobs and Services",
-            "yardSales": "Yard Sales",
-            "conventions": "Conventions",
-            "other": "Other"
-        };
-
-        this.citiesNeighborhoods = {
-            'seattle': {
-                "queenAnne": "Queen Anne",
-                "universityDistrict": "University District",
-            },
-            'kelowna': {
-                'ubco': 'UBCO',
-                'downtown': 'Downtown',
-            }
-        }
-    }
-
-    public static getInstance(): Singleton {
-        if (!Singleton.instance) {
-            Singleton.instance = new Singleton();
-        }
-
-        return Singleton.instance;
-    }
-
-    getKeywords() {
-        return this.keywords;
-    }
-
-    getCitiesNeighborhoods() {
-        return this.citiesNeighborhoods;
-    }
-}
-
 /*
     The poster class has all the fields that are repersented in the database.
     This also contains the function to upload the poster to the database.

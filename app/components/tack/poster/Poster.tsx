@@ -4,10 +4,9 @@ import { auth } from '@/app/js/firebase/firebase'
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Telepole_Poster } from '@/app/js/types';
+import { keywords } from '@/app/js/setting';
 
 type PosterProps = {
-    
-
 };
 
 const Poster:React.FC<PosterProps> = () => {
@@ -143,15 +142,11 @@ const Poster:React.FC<PosterProps> = () => {
                 <select id="keyword" name="keyword" 
                     className='border-2 border-gray-300 rounded-md p-2 w-full'
                     onChange={(e) => handleChangeInput(e)}>
-                    <option value="placeHolder"> Choose an Event Type </option>
-                    <option value="lostAndFound">Lost and Found</option>
-                    <option value="music">Music</option>
-                    <option value="food">Food</option>
-                    <option value="clubsAndOrganizations">Clubs and Organizations</option>
-                    <option value="jobsAndServices">Jobs and Services</option>
-                    <option value="yardSales">Garage or Yard Sale</option>
-                    <option value="conventions">Conventions</option>
-                    <option value="other">Other</option>
+
+                    {Object.keys(keywords).map((key) => {
+                        return <option value={key}>{keywords[key]}</option>
+                    })}
+
                 </select>
             </div>
 
