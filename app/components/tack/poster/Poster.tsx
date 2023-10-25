@@ -144,7 +144,7 @@ const Poster:React.FC<PosterProps> = () => {
                     onChange={(e) => handleChangeInput(e)}>
 
                     {Object.keys(keywords).map((key) => {
-                        return <option value={key}>{keywords[key]}</option>
+                        return <option key={key} value={key}>{keywords[key]}</option>
                     })}
 
                 </select>
