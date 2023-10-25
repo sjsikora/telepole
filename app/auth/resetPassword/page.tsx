@@ -6,7 +6,7 @@ type pageProps = {
     
 };
 
-const page:React.FC<pageProps> = () => {
+const Page:React.FC<pageProps> = () => {
 
     const [inputs, setInputs] = React.useState({email: ''})
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -31,4 +31,4 @@ const page:React.FC<pageProps> = () => {
         handleChangeInput={handleChangeInput}
     />
 }
-export default page;
+export default Page;

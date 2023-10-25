@@ -11,7 +11,7 @@ type pageProps = {
 
 };
 
-const page: React.FC<pageProps> = () => {
+const Page: React.FC<pageProps> = () => {
 
     const router = useRouter();
     const [inputs, setInputs] = React.useState({ email: '', password: '' })
@@ -54,4 +54,4 @@ const page: React.FC<pageProps> = () => {
     />
 
 }
-export default page;
+export default Page;

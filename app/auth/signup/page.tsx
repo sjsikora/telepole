@@ -12,7 +12,7 @@ type pageProps = {
     
 };
 
-const page:React.FC<pageProps> = () => {
+const Page:React.FC<pageProps> = () => {
 
     const router = useRouter();
     const [inputs, setInputs] = React.useState({displayName:'', email: '', password: ''});
@@ -68,4 +68,4 @@ const page:React.FC<pageProps> = () => {
         handleChangeInput={handleChangeInput}
     />
 }
-export default page;
+export default Page;
