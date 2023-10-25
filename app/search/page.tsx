@@ -9,7 +9,7 @@ type pageProps = {
     
 };
 
-const page:React.FC<pageProps> = () => {
+const Page:React.FC<pageProps> = () => {
 
     const searchParams = useSearchParams();
     const id = searchParams.get('search-keyword');
@@ -23,4 +23,4 @@ const page:React.FC<pageProps> = () => {
         
     </div>
 }
-export default page;
+export default Page;

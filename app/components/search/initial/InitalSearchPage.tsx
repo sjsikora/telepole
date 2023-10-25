@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from 'react';
 import SearchBar from './SearchBar';
 import SearchBox from './SearchBox';
-import { Singleton } from '@/app/js/types';
+import { citiesNeighborhoods, keywords } from '@/app/js/setting';
 
 type InitalSearchPageProps = {
     
@@ -10,19 +10,18 @@ type InitalSearchPageProps = {
 const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
     
     const [searchbyEvents, setSearchbyEvents] = React.useState(false);
-    const singletonRef = React.useRef<Singleton>(Singleton.getInstance());
-    const [searchableUnits, setSearchableUnits] = React.useState(singletonRef.current.getCitiesNeighborhoods()['seattle']);
+    const [searchableUnits, setSearchableUnits] = React.useState(citiesNeighborhoods['seattle']);
     
     const neighborhoodButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
         setSearchbyEvents(false);
-        setSearchableUnits(singletonRef.current.getCitiesNeighborhoods()['seattle']);
+        setSearchableUnits(citiesNeighborhoods['seattle']);
     }
 
     const eventButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
         setSearchbyEvents(true);
-        setSearchableUnits(singletonRef.current.getKeywords());
+        setSearchableUnits(keywords);
     }
 
 

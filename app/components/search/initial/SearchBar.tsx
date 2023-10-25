@@ -21,7 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchableUnits }) => {
 
             <select name="search-keyword" id="search-keyword">
                 {Object.keys(searchableUnits).map((key) => {
-                    return <option value={key}>{searchableUnits[key]}</option>
+                    return <option key={key} value={key}>{searchableUnits[key]}</option>
                 })}
             </select>
 

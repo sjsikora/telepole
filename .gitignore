@@ -36,3 +36,4 @@ next-env.d.ts
 .env
 forSam.md
 temp.txt
+.devcontainer/devcontainer.json

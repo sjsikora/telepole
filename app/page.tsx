@@ -8,7 +8,7 @@ import { cities, citiesNeighborhoods} from './js/setting';
 type pageProps = {
 };
 
-const page: React.FC<pageProps> = () => {
+const Page: React.FC<pageProps> = () => {
 
     const [neighborhood, setNeighborhood] = React.useState<string>('');
     const [city, setCity] = React.useState<string>('');
@@ -59,4 +59,4 @@ const page: React.FC<pageProps> = () => {
     </div>
 }
 
-export default page;
+export default Page;
