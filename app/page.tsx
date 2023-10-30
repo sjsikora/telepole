@@ -23,7 +23,6 @@ const Page: React.FC<pageProps> = () => {
     return <div>
 
         <CityHandler setCity={setCityModal} />
-        
         <Navbar city={city} />
 
         <div className='w-full h-[93vh] flex-col md:flex-row md:flex md:justify-between'>

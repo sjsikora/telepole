@@ -13,11 +13,12 @@ const CityHandler:React.FC<CityHandlerProps> = ({setCity}) => {
     const [city, setCityHandler] = React.useState(Object.keys(cities)[0]);
     const [modalOpen, setModalOpen] = React.useState(true);
 
-    if(Object.keys(cities).includes(searchParams.get('city') as string) ) {
-        setModalOpen(false);
-        setCity(searchParams.get('city') as string);
-        return <div></div>
-    }
+    React.useEffect(() => {
+        if(Object.keys(cities).includes(searchParams.get('city') as string) ) {
+            setModalOpen(false);
+            setCity(searchParams.get('city') as string);
+        }
+    }, [searchParams]);
 
     function onClose(e: React.MouseEvent<HTMLButtonElement>) {
         setModalOpen(false);
