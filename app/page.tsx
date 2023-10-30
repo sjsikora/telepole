@@ -2,8 +2,8 @@
 import React from 'react';
 import Navbar from './components/navbar/Navbar';
 import MapHandler from './components/index/MapHandler';
-import CityModal from './components/cityModal/CityModal';
 import { cities, citiesNeighborhoods} from './js/setting';
+import CityHandler from './components/cityModal/CityHandler';
 
 type pageProps = {
 };
@@ -11,24 +11,20 @@ type pageProps = {
 const Page: React.FC<pageProps> = () => {
 
     const [neighborhood, setNeighborhood] = React.useState<string>('');
-    const [city, setCity] = React.useState<string>(Object.keys(cities)[0]);
-    const [cityDisplayName, setCityDisplayName] = React.useState<string>(cities[city]);
-    const [modalOpen, setModalOpen] = React.useState<boolean>(true);
+    const [city, setCity] = React.useState<string>('');
+    const [cityDisplayName, setCityDisplayName] = React.useState<string>('');
 
     function setCityModal(city: string) {
-        // If users dont do anything need to fix
         setCity(city);
         setCityDisplayName(cities[city]);
-    }
-
-    function onClose(e: React.MouseEvent<HTMLButtonElement>) {
-        setModalOpen(false);
         setNeighborhood(Object.keys(citiesNeighborhoods[city])[0]);
     }
 
     return <div>
-        <CityModal open={modalOpen} onClose={onClose} setCityModal={setCityModal} possibleCities={cities} />
-        <Navbar />
+
+        <CityHandler setCity={setCityModal} />
+        
+        <Navbar city={city} />
 
         <div className='w-full h-[93vh] flex-col md:flex-row md:flex md:justify-between'>
 
@@ -37,7 +33,7 @@ const Page: React.FC<pageProps> = () => {
                     <div className='flex flex-col items-center justify-center'>
                         <div>
                             <p className='text-5xl font-bold'> Welcome to Telepole. </p>
-                            <p className='pl-5 text-2xl'> Your connection to {!modalOpen ? cityDisplayName : "... "} streamlined.</p>
+                            <p className='pl-5 text-2xl'> Your connection to {!(neighborhood === '') ? cityDisplayName : "... "} streamlined.</p>
                             <p className='pl-5 text-2xl'> Your online telephone pole.</p>
                         </div>
                     </div>

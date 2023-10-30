@@ -12,7 +12,7 @@ type pageProps = {
 const Page:React.FC<pageProps> = () => {
 
     const searchParams = useSearchParams();
-    const id = searchParams.get('search-keyword');
+    const id = searchParams.get('key');
 
     console.log(id);
 

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Image from 'next/image'
 import largeLogo from '../../../public/assets/anti_full_logo.png'
@@ -7,21 +8,26 @@ import NavbarButton from './NavbarButton';
 import Link from 'next/link';
 
 type NavbarProps = {
-    
+    city : string | null
 };
 
 //TODO: Profile Picture in top right should be converted to a google symbol
 
 
-const Navbar:React.FC<NavbarProps> = () => {
+const Navbar:React.FC<NavbarProps> = ({city}) => {
     
+    // this is just nothing
+    const [urlAddition] = React.useState(Object.is(city, null) ? '' : `?city=${city}`);
+
+    console.log(urlAddition);
+
     return <div className='bg-spgreen flex justify-between items-center'>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         
         <div className='flex items-center px-3'>
-            <Link href="/"><Image className='hidden md:block' alt="Telepole logo" src={largeLogo} width={200} /></Link>
-            <Link href="/"><Image className='p-[0.5rem] md:hidden' alt="Telepole logo" src={smallLogo} width={90} /></Link>
+            <Link href={`/${urlAddition}`}> <Image className='hidden md:block' alt="Telepole logo" src={largeLogo} width={200} /></Link>
+            <Link href={`/${urlAddition}`}> <Image className='p-[0.5rem] md:hidden' alt="Telepole logo" src={smallLogo} width={90} /></Link>
             
             
             <Link className='text-white text-md px-[1rem] sm:text-lg' href='./about'> about</Link>
