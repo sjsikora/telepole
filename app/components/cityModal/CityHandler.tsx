@@ -11,12 +11,14 @@ const CityHandler:React.FC<CityHandlerProps> = ({setCity}) => {
 
     const [searchParams] = React.useState(useSearchParams());
     const [city, setCityHandler] = React.useState(Object.keys(cities)[0]);
-    const [modalOpen, setModalOpen] = React.useState(true);
+    const [modalOpen, setModalOpen] = React.useState(false);
 
     React.useEffect(() => {
         if(Object.keys(cities).includes(searchParams.get('city') as string) ) {
             setModalOpen(false);
             setCity(searchParams.get('city') as string);
+        } else {
+            setModalOpen(true);
         }
     }, [searchParams]);
 
@@ -29,13 +31,8 @@ const CityHandler:React.FC<CityHandlerProps> = ({setCity}) => {
         setCityHandler(city);
     }
     
-    if(!modalOpen) {
-        setCity(city);
-        return <div></div>
-    }
 
     return <CityModal open = {modalOpen} onClose={onClose} setCityModal={setCityModal} />
-
 
 }
 export default CityHandler;
