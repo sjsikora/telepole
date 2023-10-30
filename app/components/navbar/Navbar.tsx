@@ -16,10 +16,7 @@ type NavbarProps = {
 
 const Navbar:React.FC<NavbarProps> = ({city}) => {
     
-    // this is just nothing
-    const [urlAddition] = React.useState(Object.is(city, null) ? '' : `?city=${city}`);
-
-    console.log(urlAddition);
+    const urlAddition = (Object.is(city, null) || city === '') ? '' : `?city=${city}`;
 
     return <div className='bg-spgreen flex justify-between items-center'>
 
