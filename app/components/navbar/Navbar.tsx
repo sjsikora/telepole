@@ -16,7 +16,7 @@ type NavbarProps = {
 
 const Navbar:React.FC<NavbarProps> = ({city}) => {
     
-    const urlAddition = (Object.is(city, null) || city === '') ? '' : `?city=${city}`;
+    const urlAddition = (Object.is(city, null) || city === '' || city === 'undefined') ? '' : `?city=${city}`;
 
     return <div className='bg-spgreen flex justify-between items-center'>
 
@@ -27,19 +27,19 @@ const Navbar:React.FC<NavbarProps> = ({city}) => {
             <Link href={`/${urlAddition}`}> <Image className='p-[0.5rem] md:hidden' alt="Telepole logo" src={smallLogo} width={90} /></Link>
             
             
-            <Link className='text-white text-md px-[1rem] sm:text-lg' href='./about'> about</Link>
-            <Link className='text-white text-md sm:text-lg' href='./contact'> contact</Link>
+            <Link className='text-white text-md px-[1rem] sm:text-lg' href={`./about${urlAddition}`}> about</Link>
+            <Link className='text-white text-md sm:text-lg' href={`./contact${urlAddition}`}> contact</Link>
         </div>
 
         <div className='flex items-center pr-3'>
 
             <div className='flex justify-around px-[2rem]'>
-                <NavbarButton iconName='push_pin' word='Tack' redirectURL='/tack'/>
+                <NavbarButton iconName='push_pin' word='Tack' redirectURL={`/tack${urlAddition}`} />
                 <div className='px-2'/>
-                <NavbarButton iconName='search' word='Search' redirectURL='/search'/>
+                <NavbarButton iconName='search' word='Search' redirectURL={`/search${urlAddition}`} />
             </div>
 
-            <Link href="/auth/login"><Image alt="user icon" src={profile} width={50} /> </Link>
+            <Link href={`/auth/login${urlAddition}`}><Image alt="user icon" src={profile} width={50} /> </Link>
         </div>
 
     </div>
