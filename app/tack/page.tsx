@@ -9,9 +9,7 @@ type pageProps = {
 const page:React.FC<pageProps> = () => {
     
     return <div>
-        <Navbar />
         <TackBoard />
-
     </div>
 }
 export default page;
