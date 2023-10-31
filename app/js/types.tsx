@@ -1,6 +1,6 @@
 import { storage, firestore } from '@/app/js/firebase/firebase';
 import { FirebaseStorage, uploadBytes } from 'firebase/storage';
-import { Firestore, addDoc, collection, getDoc, getDocs } from 'firebase/firestore';
+import { Firestore, query, addDoc, collection, getDocs, where } from 'firebase/firestore';
 import { ref } from 'firebase/storage';
 import { auth } from '@/app/js/firebase/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -182,13 +182,12 @@ export class Telepole_User {
     firebaseAuthRef: any;
 
 
-    constructor(mainCity: string) {
-        this.mainCity = mainCity;
+    constructor() {
         this.firebaseRef = firestore;
         this.firebaseAuthRef = auth;
     }
 
-    async uploadUser(email: string, password: string, display_name: string) {
+    async uploadUser(email: string, password: string, display_name: string, mainCity: string) {
 
         console.log(email, password, display_name);
 
@@ -202,7 +201,7 @@ export class Telepole_User {
         const userRef = collection(this.firebaseRef, `users`);
 
         await addDoc(userRef, {
-            mainCity: this.mainCity,
+            mainCity: mainCity,
             firebaseUserID: auth.currentUser.uid,
             email: email,
             display_name: display_name,
@@ -213,24 +212,32 @@ export class Telepole_User {
             })
     }
 
-    getUserDataByID(firebaseUserID: string) {
+    async getUserDataByID(firebaseUserID: string) : Promise<any> {
         const collectionRef = collection(this.firebaseRef, `users`);
+        const q = query(collectionRef, where("firebaseUserID", "==", firebaseUserID));
 
-        getDocs(collectionRef)
+        await getDocs(q)
             .then((snapshot) => {
+
                 snapshot.docs.forEach((doc) => {
                     if (doc.data().firebaseUserID == firebaseUserID) {
 
+                        console.log(doc.data().mainCity + " maincity for user");
+
                         this.display_name = doc.data().display_name;
                         this.email = doc.data().email;
-                        this.display_name = doc.data().display_name;
+                        this.mainCity = doc.data().mainCity;
                         this.ownedPosters = doc.data().ownedPosters;
 
-                        return;
                     }
                 })
-                throw new Error('User not found.');
-            })
-    }
+            });
 
+        return {
+            'display_name': this.display_name,
+            'email': this.email,
+            'mainCity': this.mainCity,
+            'ownedPosters': this.ownedPosters
+        }
+    }
 }
