@@ -5,6 +5,10 @@ import Link from 'next/link';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
 import CityHandler from '../cityModal/CityHandler';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { auth } from '@/app/js/firebase/firebase';
+
 
 type AuthModelProps = {
     typeAuth: "Log in" | "Sign up" | "Reset Password",
@@ -22,9 +26,23 @@ type AuthModelProps = {
 
 const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, handleRegister, handleChangeInput, setCityHandler }) => {
 
+    const [urlAddition, setUrlAddition] = React.useState('');
+    const router = useRouter();
+
+    // Set the city locally and the pass to upper component
+    const setCityIntermediate = (city: string) => {
+        setUrlAddition(`?city=${city}`);
+        setCityHandler(city);
+    }
+
+    //Check if user is already signed in:
+    onAuthStateChanged(auth, (user) => {
+        if (user) router.push(`/${urlAddition}`);   
+    });
+
     return <div>
 
-        <CityHandler setCity={setCityHandler} />
+        <CityHandler setCity={setCityIntermediate} />
 
         <div className='flex flex-col items-center justify-center'>
             <Link href="."><Image className='p-10' alt="Telepole logo" src={logo} width={400} /> </Link>
@@ -57,7 +75,7 @@ const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, h
 
                         {(typeAuth === 'Log in' || typeAuth === 'Sign up') &&
                             <div className='flex justify-center'>
-                                <Link className="text-spgreen underline" href="./auth/resetPassword">I forgot my password</Link>
+                                <Link className="text-spgreen underline" href={`./auth/resetPassword${urlAddition}`}>I forgot my password</Link>
                             </div>
                         }
 
@@ -66,17 +84,16 @@ const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, h
                             <div className='flex justify-center p-2'>
                                 <div> New to Telepole? </div>
                                 <div className='px-2' />
-                                <Link className="text-spgreen underline" href="./auth/signup">Sign up</Link>
+                                <Link className="text-spgreen underline" href={`./auth/signup${urlAddition}`}>Sign up</Link>
                             </div>
                         }
 
                         {(typeAuth === 'Reset Password' || typeAuth === 'Sign up') && <div className='flex justify-center p-2'>
                             <div> Already have an account? </div>
                             <div className='px-2' />
-                            <Link className="text-spgreen underline" href="./auth/login">Log in</Link>
+                            <Link className="text-spgreen underline" href={`./auth/login${urlAddition}`}>Log in</Link>
                         </div>
                         }
-
                     </div>
                     <div />
 
@@ -84,10 +101,5 @@ const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, h
             </div>
         </div>
     </div>
-
-
-
-
-
 }
 export default AuthModel;
