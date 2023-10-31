@@ -10,6 +10,11 @@ const Page:React.FC<pageProps> = () => {
 
     const [inputs, setInputs] = React.useState({email: ''})
     const [errorMessage, setErrorMessage] = React.useState('');
+    const [city, setCity] = React.useState('');
+
+    const setCityHandler = (city: string) => {
+        setCity(city);
+    }
 
     console.log(inputs);
 
@@ -29,6 +34,7 @@ const Page:React.FC<pageProps> = () => {
         inputs={{email: 'Email'}}
         handleRegister={handleRegister}
         handleChangeInput={handleChangeInput}
+        setCityHandler={setCityHandler}
     />
 }
 export default Page;

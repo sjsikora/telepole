@@ -4,6 +4,7 @@ import logo from '../../../public/assets/full_logo.svg'
 import Link from 'next/link';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
+import CityHandler from '../cityModal/CityHandler';
 
 type AuthModelProps = {
     typeAuth: "Log in" | "Sign up" | "Reset Password",
@@ -15,12 +16,16 @@ type AuthModelProps = {
 
     handleRegister: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
     handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void
+    setCityHandler: (city : string) => void
 
 };
 
-const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, handleRegister, handleChangeInput }) => {
+const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, handleRegister, handleChangeInput, setCityHandler }) => {
 
     return <div>
+
+        <CityHandler setCity={setCityHandler} />
+
         <div className='flex flex-col items-center justify-center'>
             <Link href="."><Image className='p-10' alt="Telepole logo" src={logo} width={400} /> </Link>
             <div className='shadow-2xl flex flex-col min-w-[20rem] w-[26vw] max-w-[30rem]'>
