@@ -11,20 +11,9 @@ type PosterProps = {
 };
 
 const Poster:React.FC<PosterProps> = ({city}) => {
-
-    //If user is not signed in, redirect to login page:
-    const router = useRouter();
-
-    //Wrapped in a useEffect because with get an error if not
-    useEffect(() => {onAuthStateChanged(auth, (user) => {
-            if (!user) router.push('/auth/login');
-        });
-    }, []);
-
     const [imageUpload, setImageUpload] = React.useState<any>(null);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(false);
-
     const [inputs, setInputs] = React.useState({
         title:'required',
         description: 'required',
@@ -34,6 +23,15 @@ const Poster:React.FC<PosterProps> = ({city}) => {
         reccuring : false,
         expiration: ''
     });
+
+    //If user is not signed in, redirect to login page:
+    const router = useRouter();
+
+    //Wrapped in a useEffect because with get an error if not
+    useEffect(() => {onAuthStateChanged(auth, (user) => {
+            if (!user) router.push('/auth/login');
+        });
+    }, []);
 
     function handleChangeInput(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>): void {
         setInputs((prev) => ({...prev, [e.target.name]: e.target.value}));
