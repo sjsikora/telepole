@@ -10,9 +10,6 @@ type MainMapProps = {
 
 const MainMap: React.FC<MainMapProps> = ({ neighborhoodString }) => {
 
-  console.log(neighborhoodString);
-  console.log(mapboxNeighborhood[neighborhoodString]);
-
   return <div className='w-full h-full'>
     <Map
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
