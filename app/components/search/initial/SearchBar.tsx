@@ -1,7 +1,12 @@
 "use client";
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { set } from 'firebase/database';
 
 type SearchBarProps = {
+
+    city : string;
+
     searchableUnits: {
         [key: string]: string;
     }
@@ -9,11 +14,22 @@ type SearchBarProps = {
 
 // searchableUnits : Array<String>;
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchableUnits }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ city, searchableUnits }) => {
+
+    const router = useRouter();
+    const [searchKey, setSearchKey] = React.useState('');
+
+    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        
+        const key = event.currentTarget['key'].value;
+        router.push(`/search/?city=${city}&key=${key}`)
+    
+    }
 
     return <div>
 
-        <form action="/search/" method="get">
+        <form onSubmit={handleFormSubmit} >
 
             <label htmlFor="search-keyword">
                 <span className="visually-hidden">Search </span>

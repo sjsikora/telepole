@@ -4,7 +4,6 @@ import CityModal from './CityModal';
 import { cities } from '@/app/js/setting';
 import { auth } from '@/app/js/firebase/firebase';
 import { Telepole_User } from '@/app/js/types';
-import { set } from 'firebase/database';
 
 type CityHandlerProps = {
     setCity : (city: string) => void

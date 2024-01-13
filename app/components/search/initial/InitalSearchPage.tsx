@@ -4,18 +4,18 @@ import SearchBox from './SearchBox';
 import { citiesNeighborhoods, keywords } from '@/app/js/setting';
 
 type InitalSearchPageProps = {
-    
+    city : string;
 };
 
-const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
+const InitalSearchPage: React.FC<InitalSearchPageProps> = ({city}) => {
     
     const [searchbyEvents, setSearchbyEvents] = React.useState(false);
-    const [searchableUnits, setSearchableUnits] = React.useState(citiesNeighborhoods['seattle']);
+    const [searchableUnits, setSearchableUnits] = React.useState( city === '' ? {} : citiesNeighborhoods[city]);
     
     const neighborhoodButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
         setSearchbyEvents(false);
-        setSearchableUnits(citiesNeighborhoods['seattle']);
+        setSearchableUnits(citiesNeighborhoods[city]);
     }
 
     const eventButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -38,7 +38,7 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = () => {
         </div>
 
         <div className='flex justify-center p-2'>
-            <SearchBar searchableUnits={searchableUnits} />
+            <SearchBar city={city} searchableUnits={searchableUnits} />
         </div>
 
 
