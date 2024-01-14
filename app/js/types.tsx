@@ -5,11 +5,42 @@ import { ref } from 'firebase/storage';
 import { auth } from '@/app/js/firebase/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+
+/*
+    This singleton class will store global variables needed for the app. Currently, it is not used, but further
+    development will ultize this as the main way to store global variables such as the city.
+*/
+export class Singleton {
+
+    private static instance: Singleton;
+    private city = "";
+
+    private constructor() { }
+
+
+    public static getInstance(): Singleton {
+        if (!Singleton.instance) {
+            Singleton.instance = new Singleton();
+        }
+
+        return Singleton.instance;
+    }
+
+
+    public getCity() {
+        return Singleton.instance.city;
+    }
+
+    public setCity(city: string) {
+        Singleton.instance.city = city;
+    }
+
+}
+
 /*
     The poster class has all the fields that are repersented in the database.
     This also contains the function to upload the poster to the database.
 */
-
 export class Telepole_Poster {
 
     // Required Values for any Poster Object
