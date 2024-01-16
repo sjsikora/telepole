@@ -1,9 +1,10 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './components/navbar/Navbar';
 import MapHandler from './components/index/MapHandler';
 import { cities, citiesNeighborhoods} from './js/setting';
 import CityHandler from './components/cityModal/CityHandler';
+import { Singleton } from './js/types';
 
 type pageProps = {
 };
@@ -11,18 +12,27 @@ type pageProps = {
 const Page: React.FC<pageProps> = () => {
 
     const [neighborhood, setNeighborhood] = React.useState<string>('');
-    const [city, setCity] = React.useState<string>('');
+    const [city, setCity] = React.useState<string>(Singleton.getInstance().getCity());
     const [cityDisplayName, setCityDisplayName] = React.useState<string>('');
 
-    function setCityModal(city: string) {
-        setCity(city);
-        setCityDisplayName(cities[city]);
-        setNeighborhood(Object.keys(citiesNeighborhoods[city])[0]);
-    }
+    useEffect(() => {
+
+        function handleCityChange() {
+            setCity(Singleton.getInstance().getCity());
+            setCityDisplayName(cities[Singleton.getInstance().getCity()]);
+            setNeighborhood(Object.keys(citiesNeighborhoods[Singleton.getInstance().getCity()])[0]);
+        }
+
+        console.log(city);
+
+        // Subscribe to city changes
+        Singleton.getInstance().subscribe(handleCityChange);
+        
+    }, []);
 
     return <div>
 
-        <CityHandler setCity={setCityModal} />
+        <CityHandler />
         <Navbar city={city} />
 
         <div className='w-full h-[93vh] flex-col md:flex-row md:flex md:justify-between'>

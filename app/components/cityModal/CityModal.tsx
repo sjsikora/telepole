@@ -1,5 +1,6 @@
 import React from 'react';
 import { SingleMap, cities } from '@/app/js/setting';
+import { Singleton } from '@/app/js/types';
 
 type CityModalProps = {
     open: boolean,

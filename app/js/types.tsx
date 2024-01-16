@@ -8,15 +8,15 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 /*
     This singleton class will store global variables needed for the app. Currently, it is not used, but further
-    development will ultize this as the main way to store global variables such as the city.
+    development will ultize this as the main way to store global variables such as the city. 
 */
 export class Singleton {
 
     private static instance: Singleton;
     private city = "";
+    private subscriber: (city: string) => void = () => { };
 
     private constructor() { }
-
 
     public static getInstance(): Singleton {
         if (!Singleton.instance) {
@@ -33,6 +33,19 @@ export class Singleton {
 
     public setCity(city: string) {
         Singleton.instance.city = city;
+        Singleton.instance.notifySubscribers();
+    }
+
+    public subscribe(callback: (city: string) => void): void {
+        Singleton.instance.subscriber = callback;
+    }
+
+    public unsubscribe(): void {
+        Singleton.instance.subscriber = () => { };
+    }
+
+    private notifySubscribers(): void {
+        Singleton.instance.subscriber(Singleton.instance.city);
     }
 
 }
