@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import SearchBox from './SearchBox';
 import { citiesNeighborhoods, keywords } from '@/app/js/setting';
@@ -10,7 +10,12 @@ type InitalSearchPageProps = {
 const InitalSearchPage: React.FC<InitalSearchPageProps> = ({city}) => {
     
     const [searchbyEvents, setSearchbyEvents] = React.useState(false);
-    const [searchableUnits, setSearchableUnits] = React.useState( city === '' ? {} : citiesNeighborhoods[city]);
+    const [searchableUnits, setSearchableUnits] = React.useState(city === '' ? {} : citiesNeighborhoods[city]);
+
+    // Ensure on page refresh, searchableUnits is updated with new city.
+    useEffect(() => {
+        setSearchableUnits(city === '' ? {} : citiesNeighborhoods[city]);
+    })
     
     const neighborhoodButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();

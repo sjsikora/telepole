@@ -1,7 +1,5 @@
 'use client';
 import React, { useEffect } from 'react';
-import { auth } from '@/app/js/firebase/firebase'
-import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Telepole_Poster } from '@/app/js/types';
 import { citiesNeighborhoods, keywords } from '@/app/js/setting';
@@ -26,12 +24,6 @@ const Poster:React.FC<PosterProps> = ({city}) => {
 
     //If user is not signed in, redirect to login page:
     const router = useRouter();
-
-    //Wrapped in a useEffect because with get an error if not
-    useEffect(() => {onAuthStateChanged(auth, (user) => {
-            if (!user) router.push('/auth/login');
-        });
-    }, []);
 
     function handleChangeInput(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>): void {
         setInputs((prev) => ({...prev, [e.target.name]: e.target.value}));

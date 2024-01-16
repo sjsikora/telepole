@@ -1,10 +1,13 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image'
 import tack from '../../../public/icons/brass_tack.png'
 import Poster from './poster/Poster';
 import CityHandler from '../cityModal/CityHandler';
 import Navbar from '../navbar/Navbar';
+import { auth } from '@/app/js/firebase/firebase'
+import { onAuthStateChanged } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 
 type TackBoardProps = {
 
@@ -14,8 +17,16 @@ const TackBoard:React.FC<TackBoardProps> = () => {
 
     const [city, setCity] = React.useState('');
 
+    //If user is not signed in, redirect to login page:
+    const router = useRouter();
+
     function setCityModal(city : string) {
         setCity(city);
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) router.push(`/auth/login?city=${city}`);
+        });
+        
     }
     
     return <div>
