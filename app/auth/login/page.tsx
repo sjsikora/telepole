@@ -1,11 +1,8 @@
 'use client';
 import AuthModel from '@/app/components/auth/AuthModel';
 import { auth } from '@/app/js/firebase/firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
-
-
 
 type pageProps = {
 
@@ -13,15 +10,10 @@ type pageProps = {
 
 const Page: React.FC<pageProps> = () => {
 
-    const router = useRouter();
     const [inputs, setInputs] = React.useState({ email: '', password: '' })
     const [errorMessage, setErrorMessage] = React.useState('');
 
-    //Check if user is already signed in:
-    onAuthStateChanged(auth, (user) => {
-        if (user) router.push('/');
-        
-    });
+    const setCityHandler = (city: string) => {}
 
     const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -51,6 +43,7 @@ const Page: React.FC<pageProps> = () => {
         inputs={{ email: 'Email', password: 'Password' }}
         handleRegister={handleRegister}
         handleChangeInput={handleChangeInput}
+        setCityHandler={setCityHandler}
     />
 
 }

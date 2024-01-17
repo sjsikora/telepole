@@ -1,14 +1,13 @@
 import React from 'react';
-import { SingleMap } from '@/app/js/setting';
+import { SingleMap, cities } from '@/app/js/setting';
 
 type CityModalProps = {
     open: boolean,
     onClose: (e: React.MouseEvent<HTMLButtonElement>) => void,
-    setCityModal: (city: string) => void,
-    possibleCities: SingleMap,
+    setCityModal: (city: string) => void
 };
 
-const CityModal:React.FC<CityModalProps> = ({ open, onClose, setCityModal, possibleCities}) => {
+const CityModal:React.FC<CityModalProps> = ({ open, onClose, setCityModal }) => {
 
     return <div className={`overscroll-none fixed inset-0 flex justify-center items-center transition-colors ${open ? "visible bg-black/40" : "invisible"}`}>
         <div className={`bg-white rounded-xl shadow p-6 transition-all ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}`}>
@@ -25,8 +24,8 @@ const CityModal:React.FC<CityModalProps> = ({ open, onClose, setCityModal, possi
                 className='border-2 border-gray-300 rounded-md p-2 w-32'
                 onChange={(e) => setCityModal(e.target.value)} >
 
-                    {Object.keys(possibleCities).map((key) => {
-                        return <option key={key} value={key}>{possibleCities[key]}</option>
+                    {Object.keys(cities).map((key) => {
+                        return <option key={key} value={key}>{cities[key]}</option>
                     })} 
 
                 </select>

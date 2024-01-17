@@ -18,8 +18,11 @@ const Page:React.FC<pageProps> = () => {
     const [inputs, setInputs] = React.useState({displayName:'', email: '', password: ''});
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(true);
+    const [city, setCity] = React.useState('');
 
-    console.log(inputs);
+    const setCityHandler = (city: string) => {
+        setCity(city);
+    }
 
     //Check if user is already signed in:
     onAuthStateChanged(auth, (user) => {
@@ -41,9 +44,9 @@ const Page:React.FC<pageProps> = () => {
 
         setLoading(true);
 
-        const user = new Telepole_User('seattle');
+        const user = new Telepole_User();
         try {
-            await user.uploadUser(inputs.email, inputs.password, inputs.displayName);
+            await user.uploadUser(inputs.email, inputs.password, inputs.displayName, city);
         } catch (error: unknown) {
             
             if(error instanceof FirebaseError) {
@@ -52,7 +55,6 @@ const Page:React.FC<pageProps> = () => {
             } else {
                 alert(error);
             }
-
             
         } finally {
             setLoading(false);
@@ -66,6 +68,7 @@ const Page:React.FC<pageProps> = () => {
         inputs={{displayName: 'Display Name', email: 'Email', password: 'Password'}}
         handleRegister={handleRegister}
         handleChangeInput={handleChangeInput}
+        setCityHandler={setCityHandler}
     />
 }
 export default Page;

@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import Navbar from '../components/navbar/Navbar';
 import Image from 'next/image';
@@ -5,14 +6,24 @@ import Headshot from '../../public/assets/headshot.png';
 import Github from '../../public/icons/github_icon.png';
 import LinkedIn from '../../public/icons/linkedin_icon.png';
 import Link from 'next/link';
+import CityHandler from '../components/cityModal/CityHandler';
 
 type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
+
+    const [city, setCity] = React.useState('');
+
+    function setCityModal(city: string) {
+        setCity(city);
+    }
     
     return <div>
-        <Navbar />
+
+        <CityHandler setCity={setCityModal} />
+
+        <Navbar city={city}/>
         <div className='flex flex-col items-center justify-center p-10'>
 
             <div className='bg-spgreen p-10 rounded-3xl'>

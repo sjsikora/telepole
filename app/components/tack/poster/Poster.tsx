@@ -1,29 +1,17 @@
 'use client';
 import React, { useEffect } from 'react';
-import { auth } from '@/app/js/firebase/firebase'
-import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Telepole_Poster } from '@/app/js/types';
-import { keywords } from '@/app/js/setting';
+import { citiesNeighborhoods, keywords } from '@/app/js/setting';
 
 type PosterProps = {
+    city: string
 };
 
-const Poster:React.FC<PosterProps> = () => {
-
-    //If user is not signed in, redirect to login page:
-    const router = useRouter();
-
-    //Wrapped in a useEffect because with get an error if not
-    useEffect(() => {onAuthStateChanged(auth, (user) => {
-            if (!user) router.push('/auth/login');
-        });
-    }, []);
-
+const Poster:React.FC<PosterProps> = ({city}) => {
     const [imageUpload, setImageUpload] = React.useState<any>(null);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(false);
-
     const [inputs, setInputs] = React.useState({
         title:'required',
         description: 'required',
@@ -34,6 +22,8 @@ const Poster:React.FC<PosterProps> = () => {
         expiration: ''
     });
 
+    //If user is not signed in, redirect to login page:
+    const router = useRouter();
 
     function handleChangeInput(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>): void {
         setInputs((prev) => ({...prev, [e.target.name]: e.target.value}));
@@ -46,8 +36,6 @@ const Poster:React.FC<PosterProps> = () => {
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-
-        let city = 'seattle';
         
 
         if(imageUpload === null) {
@@ -132,8 +120,11 @@ const Poster:React.FC<PosterProps> = () => {
                     className='border-2 border-gray-300 rounded-md p-2 w-full'
                     onChange={(e) => handleChangeInput(e)} >
                     <option value="placeHolder"> Choose a Neighborhood </option>
-                    <option value="queenAnne"> Queen Anne </option>
-                    <option value="universityDistrict"> University District</option>
+
+                    {city ? Object.keys(citiesNeighborhoods[city]).map((key) => {
+                        return <option key={key} value={key}>{citiesNeighborhoods[city][key]}</option>
+                    }) : <option value='placeHolder'> Loading.. Please wait</option>}
+                    
                 </select>
             </div>
 
