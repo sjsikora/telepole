@@ -45,7 +45,7 @@ const AuthModel: React.FC<AuthModelProps> = ({ typeAuth, errorMessage, inputs, h
         <CityHandler setCity={setCityIntermediate} />
 
         <div className='flex flex-col items-center justify-center'>
-            <Link href="."><Image className='p-10' alt="Telepole logo" src={logo} width={400} /> </Link>
+            <Link href={`.${urlAddition}`}><Image className='p-10' alt="Telepole logo" src={logo} width={400} /> </Link>
             <div className='shadow-2xl flex flex-col min-w-[20rem] w-[26vw] max-w-[30rem]'>
 
 

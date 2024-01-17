@@ -14,19 +14,20 @@ const InitalSearchPage: React.FC<InitalSearchPageProps> = ({city}) => {
 
     // Ensure on page refresh, searchableUnits is updated with new city.
     useEffect(() => {
-        setSearchableUnits(city === '' ? {} : citiesNeighborhoods[city]);
+
+        if(city === '') setSearchableUnits({});
+        else if(searchbyEvents) setSearchableUnits(keywords);
+        else setSearchableUnits(citiesNeighborhoods[city]);
     })
     
     const neighborhoodButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
         setSearchbyEvents(false);
-        setSearchableUnits(citiesNeighborhoods[city]);
     }
 
     const eventButtonPress: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
         setSearchbyEvents(true);
-        setSearchableUnits(keywords);
     }
 
 
