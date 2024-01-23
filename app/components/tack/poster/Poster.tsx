@@ -90,7 +90,7 @@ const Poster:React.FC<PosterProps> = ({city}) => {
                 return;
             })
 
-        router.push('/');
+        router.push(`/?city=${city}`);
     }
 
     console.log(inputs);
