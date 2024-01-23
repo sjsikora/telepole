@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { QueryDocumentSnapshot, QuerySnapshot, collection, doc, query as firestoreQuery, getDocs } from "firebase/firestore";
+import { QueryDocumentSnapshot,collection, where, query as firestoreQuery, getDocs } from "firebase/firestore";
 import { firestore } from '@/app/js/firebase/firebase';
 import PosterComponent from '../poster/PosterComponent';
+import NoData from './NoData';
 
 type TerminalSearchPageProps = {
     searchKeyword: string;
@@ -13,13 +14,15 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
     const [docArray, setDocArray] = useState<Array<QueryDocumentSnapshot>>();
     const [isLoading, setIsLoading] = useState(true);
 
+
     useEffect(() => {
 
         const fetchData = async () => {
             setIsLoading(true);
+            
             try {
 
-                const query = firestoreQuery(collection(firestore, `cities/${city}/neighborhood/${searchKeyword}/posters`));
+                const query = firestoreQuery(collection(firestore, `cities/${city}/posters`), where("neighborhood", "==", searchKeyword));
                 const querySnapshot = await getDocs(query);
                 
                 setDocArray(querySnapshot.docs);
@@ -37,7 +40,7 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
 
     if (isLoading || docArray == null) return <div>Loading...</div>;
 
-    if (docArray.length == 0) return <div>No data for this keyword, please search another.</div>;
+    if (docArray.length == 0) return < NoData city={city} />;
 
     return <div>
 
@@ -52,7 +55,7 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
                 description={data.description}
                 expriation={data.expiration}
                 imageREF={data.imageRef}
-                keyword={data.keywords}
+                keyword={data.keyword}
                 neighborhood={data.neighborhood}
                 owner={data.owner}
                 reccuring={data.reccuring}

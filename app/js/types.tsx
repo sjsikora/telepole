@@ -87,8 +87,8 @@ export class Telepole_Poster {
 
         // Ensure that that the file type is supported. Throw error if not.
         const fileType = this.imageUpload.name.substring(this.imageUpload.name.lastIndexOf('.') + 1);
-        const acceptableFileTypes = ['png', 'jpg', 'jpeg', 'heic', 'heif'];
-        if(!acceptableFileTypes.includes(fileType)) throw new Error('Can only upload images of type png, jpg, jpeg, heic, or heif.');
+        const acceptableFileTypes = ['png', 'jpg', 'jpeg' ];
+        if(!acceptableFileTypes.includes(fileType)) throw new Error('Can only upload images of type png, jpg, or jpeg.');
         
         // Create the image reference. This may not be the best way of
         // naming files.
