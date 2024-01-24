@@ -42,13 +42,15 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
 
     if (docArray.length == 0) return < NoData city={city} />;
 
-    return <div>
+    return <div className='flex'>
 
         {docArray.map((doc) => {
             
             const data = doc.data();
 
-            return <PosterComponent
+            return <div className='flex content-start'>
+
+                <PosterComponent
                 key={doc.id}
                 city={city}
                 created={data.created}
@@ -60,7 +62,9 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
                 owner={data.owner}
                 reccuring={data.reccuring}
                 title={data.title}
-            />
+                />
+
+            </div>
         })}
 
     </div>
