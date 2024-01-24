@@ -27,12 +27,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ city, searchableUnits }) => {
     
     }
 
-    return <div>
+    return <div className='rounded-xl border-2 border-black p-2'>
 
-        <form onSubmit={handleFormSubmit} >
+        <form onSubmit={handleFormSubmit}>
 
             <label htmlFor="search-keyword">
-                <span className="visually-hidden">Search </span>
+                <span className="visually-hidden"></span>
             </label>
 
             <select name="key" id="search-keyword">
@@ -41,7 +41,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ city, searchableUnits }) => {
                 })}
             </select>
 
-            <button type='submit'>Search</button>
+            <button className='3' type='submit'> Search </button>
         </form>
 
 
