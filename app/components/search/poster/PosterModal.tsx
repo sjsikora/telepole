@@ -29,7 +29,7 @@ const PosterModal: React.FC<PosterModalProps> = ({isOpen, onClose, city, created
                     <div>
                         <img src={url} alt="Poster Image" />
                     </div>
-                    <div className='grid grid-row row-span-2'>
+                    <div className='grid grid-row row-span-2 content-between'>
                         <div>
                             <h1 className='text-3xl font-bold'>{title}</h1>
                             <p className='text-lg w-1/4 truncate'>{"fkajdfkasjf kajsdfkajsdfkjadsf jdksjfdkjffkajdfkas jfkajsdfkajsdfkjadsfjdksjfdkjfjfkajdfkasjfkajsdfkajsdfkjadsfjdksjfdkjfjfkajdfkasjfkajsdfkajsdfkjadsfjdksjfdkjfjfkajdfkasjfkajsdfkajsdfkjadsfjdksjfdkjfjfkajdfkasjfkajsdfkajsdfkjadsfjdksjfdkjfjfkajdfkasjfkajsdfkajsdfkjadsfjdksjfdkjfjfkajdfkasjfkajsdfkajsdfkjadsfjdksjfdkjfjfkajdfkasjfkajsdfkajsdfkjadsfjdksjfdkjfjj"}</p>
