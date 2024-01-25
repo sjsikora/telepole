@@ -1,49 +1,28 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useState } from 'react';
-import { storage } from '@/app/js/firebase/firebase';
-import { getDownloadURL, ref } from 'firebase/storage';
-import { set } from 'firebase/database';
 import PosterModal from './PosterModal';
 
 type PosterComponentProps = {
     city: string,
     created: Date,
     description: string,
-    expriation: string,
+    expriation: Date,
     imageREF: string,
     keyword: string
     neighborhood: string,
     owner: string,
     reccuring: Date,
-    title: string
+    title: string,
+    url: string
 };
 
-const PosterComponent:React.FC<PosterComponentProps> = ({ city, created, description, expriation, imageREF, keyword, neighborhood, owner, reccuring, title}) => {
+const PosterComponent:React.FC<PosterComponentProps> = ({ city, created, description, expriation, imageREF, keyword, neighborhood, owner, reccuring, title, url}) => {
 
-    const [url, setURL] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-
-    useEffect(() => {
-        
-        const fetchData = async () => {
-            const reference = ref(storage, `/images/${city}/${imageREF}`);
-            await getDownloadURL(reference).then((x) => {
-                setURL(x);
-            })
-            
-        };
-
-        fetchData();
-    }, [storage, city, imageREF]);
 
     const imageSyle = {
         display: 'flex'
-    }
-
-
-    const onError = () => {
-        setURL('https://firebasestorage.googleapis.com/v0/b/telepole-d461a.appspot.com/o/Asset%203.svg?alt=media&token=b3e30018-2e33-4b96-826c-a13559dae22b');
     }
 
     return <div>

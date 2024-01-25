@@ -16,6 +16,21 @@ export type coordinates = {
     }
 };
 
+export interface PosterFirebaseData {
+    id : string,
+    city: string,
+    created: Date,
+    description: string,
+    expiration: Date,
+    imageRef: string,
+    keyword: string
+    neighborhood: string,
+    owner: string,
+    reccuring: Date,
+    title: string,
+    url: string
+}
+
 /*
     IMPORTANT:
         EVERY SINGLE SETTING MUST HAVE (variableName): (Name to Present to User)

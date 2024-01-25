@@ -6,7 +6,7 @@ type PosterModalProps = {
     city: string;
     created: Date;
     description: string;
-    expriation: string;
+    expriation: Date;
     imageREF: string;
     keyword: string
     neighborhood: string;

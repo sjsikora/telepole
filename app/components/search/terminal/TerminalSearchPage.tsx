@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { QueryDocumentSnapshot,collection, where, query as firestoreQuery, getDocs } from "firebase/firestore";
-import { firestore } from '@/app/js/firebase/firebase';
+import { QueryDocumentSnapshot,collection, where, query as firestoreQuery, getDocs, setDoc } from "firebase/firestore";
+import { firestore, storage } from '@/app/js/firebase/firebase';
+import { getDownloadURL, ref } from 'firebase/storage';
 import PosterComponent from '../poster/PosterComponent';
+import { PosterFirebaseData } from '@/app/js/setting';
 import NoData from './NoData';
 
 type TerminalSearchPageProps = {
@@ -11,7 +13,7 @@ type TerminalSearchPageProps = {
 
 const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , city}) => {
 
-    const [docArray, setDocArray] = useState<Array<QueryDocumentSnapshot>>();
+    const [docArray, setDocArray] = useState<Array<PosterFirebaseData>>();
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -25,14 +27,23 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
                 const query = firestoreQuery(collection(firestore, `cities/${city}/posters`), where("neighborhood", "==", searchKeyword));
                 const querySnapshot = await getDocs(query);
                 
-                setDocArray(querySnapshot.docs);
+                const data = await Promise.all(querySnapshot.docs.map(async (doc) => {
+                    const docData = doc.data() as PosterFirebaseData;
+                    const reference = ref(storage, `/images/${city}/${docData.imageRef}`);
+                    const url = await getDownloadURL(reference);
+                    docData.url = url;
+                    return { ...docData};
+                }));
+
+                setDocArray(data);
 
             } catch (error) {
-                console.error(error);
+                console.log(error);
             }
+
             setIsLoading(false);
         };
-
+        
         fetchData();
 
     }, [city, searchKeyword]);
@@ -46,22 +57,21 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
 
         {docArray.map((doc) => {
             
-            const data = doc.data();
-
             return <div className='flex content-start'>
 
                 <PosterComponent
                 key={doc.id}
                 city={city}
-                created={data.created}
-                description={data.description}
-                expriation={data.expiration}
-                imageREF={data.imageRef}
-                keyword={data.keyword}
-                neighborhood={data.neighborhood}
-                owner={data.owner}
-                reccuring={data.reccuring}
-                title={data.title}
+                created={doc.created}
+                description={doc.description}
+                expriation={doc.expiration}
+                imageREF={doc.imageRef}
+                keyword={doc.keyword}
+                neighborhood={doc.neighborhood}
+                owner={doc.owner}
+                reccuring={doc.reccuring}
+                title={doc.title}
+                url={doc.url}
                 />
 
             </div>
