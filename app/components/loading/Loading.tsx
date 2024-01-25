@@ -8,7 +8,7 @@ type LoadinProps = {
 
 const Loading:React.FC<LoadinProps> = () => {
     
-    return <div className='flex justify-center p-0'>
+    return <div className='flex justify-center p-20'>
 
         <div className='grid-cols-1'>
 
