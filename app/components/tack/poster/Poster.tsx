@@ -89,8 +89,10 @@ const Poster:React.FC<PosterProps> = ({city}) => {
                 setLoading(false);
                 return;
             })
+            .then(() => {
+                router.push(`/?city=${city}`);
+            });
 
-        router.push(`/?city=${city}`);
     }
 
     console.log(inputs);
@@ -158,7 +160,7 @@ const Poster:React.FC<PosterProps> = ({city}) => {
                 <label htmlFor="imageUpload">Upload your Poster</label>
                 <br />
 
-                <input type="file" name='imageUpload' id='imageUpload' className='p-2'
+                <input type="file" name='imageUpload' id='imageUpload' className='p-2' accept='image/png, image/jpeg, image/jpg'
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         if(!e.target.files) return; 
                         setImageUpload(e.target.files[0])
