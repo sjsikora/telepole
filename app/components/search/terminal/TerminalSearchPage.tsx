@@ -5,6 +5,7 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import PosterComponent from '../poster/PosterComponent';
 import { PosterFirebaseData } from '@/app/js/setting';
 import NoData from './NoData';
+import Loading from '../../loading/Loading';
 
 type TerminalSearchPageProps = {
     searchKeyword: string;
@@ -49,7 +50,7 @@ const TerminalSearchPage:React.FC<TerminalSearchPageProps> = ({searchKeyword , c
     }, [city, searchKeyword]);
 
 
-    if (isLoading || docArray == null) return <div>Loading...</div>;
+    if (isLoading || docArray == null) return <Loading />
 
     if (docArray.length == 0) return < NoData city={city} />;
 
